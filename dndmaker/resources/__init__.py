@@ -1,0 +1,4 @@
+"""
+Ressources de l'application
+"""
+

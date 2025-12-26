@@ -1,0 +1,255 @@
+[
+  {
+    "name": "Alchimiste",
+    "description": "Crée des potions et des élixirs",
+    "tools": ["Outils d'alchimiste"],
+    "skills": ["Arcane", "Médecine"]
+  },
+  {
+    "name": "Apothicaire",
+    "description": "Vend des remèdes et des herbes médicinales",
+    "tools": ["Outils d'herboriste"],
+    "skills": ["Médecine", "Persuasion"]
+  },
+  {
+    "name": "Architecte",
+    "description": "Concepteur de bâtiments",
+    "tools": ["Outils de bricoleur"],
+    "skills": ["Histoire", "Artisanat"]
+  },
+  {
+    "name": "Armurier",
+    "description": "Fabrique et répare des armures",
+    "tools": ["Outils de forgeron"],
+    "skills": ["Artisanat", "Histoire"]
+  },
+  {
+    "name": "Artisan",
+    "description": "Artisan généraliste",
+    "tools": ["Outils d'artisan"],
+    "skills": ["Artisanat"]
+  },
+  {
+    "name": "Aubergiste",
+    "description": "Tient une auberge",
+    "tools": ["Outils de cuisinier"],
+    "skills": ["Persuasion", "Intuition"]
+  },
+  {
+    "name": "Barde",
+    "description": "Musicien et conteur itinérant",
+    "tools": ["Instrument de musique"],
+    "skills": ["Représentation", "Persuasion"]
+  },
+  {
+    "name": "Bibliothécaire",
+    "description": "Garde le savoir et les livres",
+    "tools": ["Outils de calligraphe"],
+    "skills": ["Histoire", "Arcane"]
+  },
+  {
+    "name": "Bijoutier",
+    "description": "Crée des bijoux et des objets précieux",
+    "tools": ["Outils de bijoutier"],
+    "skills": ["Artisanat", "Persuasion"]
+  },
+  {
+    "name": "Boucher",
+    "description": "Travaille et vend diverses viandes",
+    "tools": ["Outils de boucher"],
+    "skills": ["Artisanat"]
+  },
+  {
+    "name": "Boulanger",
+    "description": "Fabrique du pain et des pâtisseries",
+    "tools": ["Outils de cuisinier"],
+    "skills": ["Artisanat"]
+  },
+  {
+    "name": "Bourrelier",
+    "description": "Fabrique des harnais pour chevaux",
+    "tools": ["Outils de tanneur"],
+    "skills": ["Artisanat"]
+  },
+  {
+    "name": "Boursier",
+    "description": "Travaille le cuir pour confectionner bourses et sacs",
+    "tools": ["Outils de tanneur"],
+    "skills": ["Artisanat"]
+  },
+  {
+    "name": "Brasseur",
+    "description": "Fabrique de la bière et des alcools",
+    "tools": ["Outils de brasseur"],
+    "skills": ["Artisanat"]
+  },
+  {
+    "name": "Capitaine",
+    "description": "Commandant de navire",
+    "tools": ["Outils de navigateur"],
+    "skills": ["Navigation", "Intimidation"]
+  },
+  {
+    "name": "Cartographe",
+    "description": "Crée des cartes détaillées",
+    "tools": ["Outils de cartographe"],
+    "skills": ["Histoire", "Survie"]
+  },
+  {
+    "name": "Chandelier",
+    "description": "Fournit la ville en bougies et huile",
+    "tools": ["Outils de chandelier"],
+    "skills": ["Artisanat"]
+  },
+  {
+    "name": "Charbonnier",
+    "description": "Produit du charbon",
+    "tools": ["Outils de charbonnier"],
+    "skills": ["Survie"]
+  },
+  {
+    "name": "Charpentier",
+    "description": "Travaille le bois pour la construction",
+    "tools": ["Outils de menuisier"],
+    "skills": ["Artisanat"]
+  },
+  {
+    "name": "Comptable",
+    "description": "Gère les investissements, prêts et taxes",
+    "tools": ["Outils de calligraphe"],
+    "skills": ["Histoire", "Persuasion"]
+  },
+  {
+    "name": "Cordier",
+    "description": "Fabrique des cordes et cordages",
+    "tools": ["Outils de cordier"],
+    "skills": ["Artisanat"]
+  },
+  {
+    "name": "Cordonnier",
+    "description": "Fabrique et répare des chaussures",
+    "tools": ["Outils de cordonnier"],
+    "skills": ["Artisanat"]
+  },
+  {
+    "name": "Courtisan",
+    "description": "Membre de la cour",
+    "tools": [],
+    "skills": ["Persuasion", "Histoire"]
+  },
+  {
+    "name": "Cuisinier",
+    "description": "Prépare des repas",
+    "tools": ["Outils de cuisinier"],
+    "skills": ["Artisanat"]
+  },
+  {
+    "name": "Érudit",
+    "description": "Chercheur et savant",
+    "tools": ["Outils de calligraphe"],
+    "skills": ["Histoire", "Arcane"]
+  },
+  {
+    "name": "Forgeron",
+    "description": "Fabrique des armes et des outils en métal",
+    "tools": ["Outils de forgeron"],
+    "skills": ["Artisanat"]
+  },
+  {
+    "name": "Gardien",
+    "description": "Garde et protecteur",
+    "tools": ["Armes", "Armures"],
+    "skills": ["Perception", "Intimidation"]
+  },
+  {
+    "name": "Guérisseur",
+    "description": "Soigne les blessures et maladies",
+    "tools": ["Outils de guérisseur"],
+    "skills": ["Médecine", "Religion"]
+  },
+  {
+    "name": "Maçon",
+    "description": "Bâtit les murs et structures en pierre",
+    "tools": ["Outils de maçon"],
+    "skills": ["Artisanat"]
+  },
+  {
+    "name": "Marchand",
+    "description": "Vend des biens et des marchandises",
+    "tools": [],
+    "skills": ["Persuasion", "Intuition"]
+  },
+  {
+    "name": "Marin",
+    "description": "Membre d'équipage de navire",
+    "tools": ["Outils de navigateur"],
+    "skills": ["Navigation", "Athlétisme"]
+  },
+  {
+    "name": "Menuisier",
+    "description": "Fabrique des objets en bois",
+    "tools": ["Outils de menuisier"],
+    "skills": ["Artisanat"]
+  },
+  {
+    "name": "Mineur",
+    "description": "Extrait des minerais",
+    "tools": ["Outils de mineur"],
+    "skills": ["Athlétisme", "Survie"]
+  },
+  {
+    "name": "Moine",
+    "description": "Religieux et érudit",
+    "tools": [],
+    "skills": ["Religion", "Histoire"]
+  },
+  {
+    "name": "Navigateur",
+    "description": "Guide les navires",
+    "tools": ["Outils de navigateur"],
+    "skills": ["Navigation", "Survie"]
+  },
+  {
+    "name": "Paysan",
+    "description": "Cultive la terre",
+    "tools": ["Outils agricoles"],
+    "skills": ["Survie", "Athlétisme"]
+  },
+  {
+    "name": "Pêcheur",
+    "description": "Pêche pour vivre",
+    "tools": ["Filet", "Canne à pêche"],
+    "skills": ["Survie"]
+  },
+  {
+    "name": "Scribe",
+    "description": "Copie des documents",
+    "tools": ["Outils de calligraphe"],
+    "skills": ["Histoire"]
+  },
+  {
+    "name": "Soldat",
+    "description": "Membre d'une armée",
+    "tools": ["Armes", "Armures"],
+    "skills": ["Athlétisme", "Intimidation"]
+  },
+  {
+    "name": "Tanneur",
+    "description": "Travaille le cuir",
+    "tools": ["Outils de tanneur"],
+    "skills": ["Artisanat"]
+  },
+  {
+    "name": "Tisserand",
+    "description": "Tisse des tissus",
+    "tools": ["Outils de tisserand"],
+    "skills": ["Artisanat"]
+  },
+  {
+    "name": "Voleur",
+    "description": "Vole et cambriole",
+    "tools": ["Outils de voleur"],
+    "skills": ["Discrétion", "Escamotage"]
+  }
+]
+

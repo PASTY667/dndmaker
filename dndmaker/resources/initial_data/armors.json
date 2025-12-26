@@ -1,0 +1,165 @@
+[
+  {
+    "name": "Armure de cuir",
+    "type": "légère",
+    "ac": 11,
+    "ac_modifier": "DEX",
+    "price": "10 po",
+    "weight": "5 kg",
+    "stealth": "normal"
+  },
+  {
+    "name": "Armure de cuir cloutée",
+    "type": "légère",
+    "ac": 12,
+    "ac_modifier": "DEX",
+    "price": "45 po",
+    "weight": "6.5 kg",
+    "stealth": "normal"
+  },
+  {
+    "name": "Armure de cuir matelassée",
+    "type": "légère",
+    "ac": 11,
+    "ac_modifier": "DEX",
+    "price": "5 po",
+    "weight": "4 kg",
+    "stealth": "désavantage"
+  },
+  {
+    "name": "Armure de peau",
+    "type": "légère",
+    "ac": 12,
+    "ac_modifier": "DEX",
+    "price": "10 po",
+    "weight": "6 kg",
+    "stealth": "normal"
+  },
+  {
+    "name": "Armure de cuir cloutée",
+    "type": "légère",
+    "ac": 12,
+    "ac_modifier": "DEX",
+    "price": "45 po",
+    "weight": "6.5 kg",
+    "stealth": "normal"
+  },
+  {
+    "name": "Cotte de mailles",
+    "type": "moyenne",
+    "ac": 13,
+    "ac_modifier": "DEX (max 2)",
+    "price": "50 po",
+    "weight": "10 kg",
+    "stealth": "normal"
+  },
+  {
+    "name": "Armure de cuir",
+    "type": "moyenne",
+    "ac": 12,
+    "ac_modifier": "DEX (max 2)",
+    "price": "10 po",
+    "weight": "5 kg",
+    "stealth": "normal"
+  },
+  {
+    "name": "Armure de peau",
+    "type": "moyenne",
+    "ac": 13,
+    "ac_modifier": "DEX (max 2)",
+    "price": "10 po",
+    "weight": "6 kg",
+    "stealth": "normal"
+  },
+  {
+    "name": "Chemise de mailles",
+    "type": "moyenne",
+    "ac": 13,
+    "ac_modifier": "DEX (max 2)",
+    "price": "50 po",
+    "weight": "6.5 kg",
+    "stealth": "normal"
+  },
+  {
+    "name": "Armure d'écailles",
+    "type": "moyenne",
+    "ac": 14,
+    "ac_modifier": "DEX (max 2)",
+    "price": "50 po",
+    "weight": "22.5 kg",
+    "stealth": "désavantage"
+  },
+  {
+    "name": "Armure de cuir cloutée",
+    "type": "moyenne",
+    "ac": 14,
+    "ac_modifier": "DEX (max 2)",
+    "price": "45 po",
+    "weight": "6.5 kg",
+    "stealth": "normal"
+  },
+  {
+    "name": "Harnois de cuir",
+    "type": "moyenne",
+    "ac": 12,
+    "ac_modifier": "DEX (max 2)",
+    "price": "10 po",
+    "weight": "5 kg",
+    "stealth": "normal"
+  },
+  {
+    "name": "Cotte de mailles",
+    "type": "lourde",
+    "ac": 14,
+    "ac_modifier": "aucun",
+    "price": "75 po",
+    "weight": "20 kg",
+    "stealth": "désavantage"
+  },
+  {
+    "name": "Armure à lamelles",
+    "type": "lourde",
+    "ac": 14,
+    "ac_modifier": "aucun",
+    "price": "200 po",
+    "weight": "20 kg",
+    "stealth": "désavantage"
+  },
+  {
+    "name": "Cotte de mailles",
+    "type": "lourde",
+    "ac": "16",
+    "ac_modifier": "aucun",
+    "price": "200 po",
+    "weight": "20 kg",
+    "stealth": "désavantage"
+  },
+  {
+    "name": "Harnois",
+    "type": "lourde",
+    "ac": 17,
+    "ac_modifier": "aucun",
+    "price": "1500 po",
+    "weight": "30 kg",
+    "stealth": "désavantage"
+  },
+  {
+    "name": "Armure de plates",
+    "type": "lourde",
+    "ac": 18,
+    "ac_modifier": "aucun",
+    "price": "1500 po",
+    "weight": "32.5 kg",
+    "stealth": "désavantage"
+  },
+  {
+    "name": "Bouclier",
+    "type": "bouclier",
+    "ac": "+2",
+    "ac_modifier": "aucun",
+    "price": "10 po",
+    "weight": "3 kg",
+    "stealth": "normal"
+  }
+]
+

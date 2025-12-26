@@ -1,0 +1,198 @@
+{
+  "id": "550e8400-e29b-41d4-a716-446655440000",
+  "name": "Ma Campagne",
+  "created_at": "2024-01-15T10:00:00",
+  "updated_at": "2024-01-20T14:30:00",
+  "version": 5,
+  "metadata": {
+    "description": "Ma première campagne Chroniques Oubliées"
+  },
+  "characters": [
+    {
+      "id": "char-001",
+      "name": "Aragorn",
+      "type": "PJ",
+      "profile": {
+        "level": 3,
+        "race": "Humain",
+        "gender": "M",
+        "age": 35,
+        "height": "1m85",
+        "weight": "85kg",
+        "racial_ability": "Bonus compétence",
+        "known_languages": ["Commun", "Elfique"]
+      },
+      "characteristics": {
+        "strength": {
+          "value": 16,
+          "modifier": 3
+        },
+        "dexterity": {
+          "value": 14,
+          "modifier": 2
+        },
+        "constitution": {
+          "value": 15,
+          "modifier": 2
+        },
+        "intelligence": {
+          "value": 12,
+          "modifier": 1
+        },
+        "wisdom": {
+          "value": 13,
+          "modifier": 1
+        },
+        "charisma": {
+          "value": 14,
+          "modifier": 2
+        }
+      },
+      "combat": {
+        "melee_attack": "FOR + NIV",
+        "ranged_attack": "DEX + NIV",
+        "magic_attack": "NIV",
+        "initiative": "DEX",
+        "life_dice": "3d8",
+        "life_points": 24,
+        "current_life_points": 18,
+        "temporary_damage": 0
+      },
+      "defense": {
+        "base": 10,
+        "armor": 2,
+        "shield": 0,
+        "dexterity": 2,
+        "misc": 0
+      },
+      "weapons": [
+        {
+          "name": "Épée longue",
+          "attack": "1d20+6",
+          "damage": "1d8+3",
+          "special": null
+        }
+      ],
+      "capabilities": {
+        "path1": {
+          "name": "Guerrier",
+          "rank": 3,
+          "level1": "Attaque supplémentaire",
+          "level2": "Maîtrise armes",
+          "level3": "Rage"
+        },
+        "path2": {
+          "name": "",
+          "rank": 0,
+          "level1": null,
+          "level2": null,
+          "level3": null
+        },
+        "path3": {
+          "name": "",
+          "rank": 0,
+          "level1": null,
+          "level2": null,
+          "level3": null
+        }
+      },
+      "equipment": [
+        "Épée longue",
+        "Armure de cuir",
+        "Sac à dos",
+        "Rations (7 jours)"
+      ],
+      "valuables": {
+        "purse": "50 pièces d'or",
+        "items": []
+      },
+      "notes": "Personnage principal de la campagne"
+    }
+  ],
+  "scenes": [
+    {
+      "id": "scene-001",
+      "title": "L'auberge du Dragon Rouge",
+      "description": "Les PJ arrivent dans l'auberge et rencontrent le mystérieux étranger.",
+      "player_characters": ["char-001"],
+      "npcs": ["npc-001"],
+      "events": [
+        {
+          "id": "event-001",
+          "title": "Rencontre avec l'étranger",
+          "description": "Un homme encapuchonné s'approche des PJ",
+          "timestamp": null
+        }
+      ],
+      "objects": ["Lettre scellée"],
+      "cards": [],
+      "images": ["img-001"],
+      "referenced_scenes": [],
+      "sessions": ["session-001"],
+      "notes": "Scène d'introduction importante",
+      "created_at": "2024-01-15T10:30:00",
+      "updated_at": "2024-01-18T16:00:00"
+    }
+  ],
+  "sessions": [
+    {
+      "id": "session-001",
+      "title": "Session 1 - Le début de l'aventure",
+      "date": "2024-01-20T19:00:00",
+      "scenes": ["scene-001"],
+      "post_session_notes": "Les joueurs ont bien accroché. À prévoir pour la prochaine fois : la forêt sombre.",
+      "created_at": "2024-01-20T19:00:00",
+      "updated_at": "2024-01-20T23:30:00",
+      "is_preparation": false
+    }
+  ],
+  "data_banks": [
+    {
+      "id": "bank-001",
+      "type": "NAMES",
+      "entries": [
+        {
+          "id": "name-001",
+          "value": "Aragorn",
+          "metadata": {}
+        },
+        {
+          "id": "name-002",
+          "value": "Gandalf",
+          "metadata": {}
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "id": "bank-002",
+      "type": "RACES",
+      "entries": [
+        {
+          "id": "race-001",
+          "value": "Humain",
+          "metadata": {}
+        },
+        {
+          "id": "race-002",
+          "value": "Elfe",
+          "metadata": {}
+        }
+      ],
+      "metadata": {}
+    }
+  ],
+  "media": [
+    {
+      "id": "img-001",
+      "filename": "auberge.jpg",
+      "filepath": "media/images/auberge.jpg",
+      "type": "IMAGE",
+      "associated_entities": {
+        "scene": ["scene-001"]
+      },
+      "created_at": "2024-01-15T11:00:00"
+    }
+  ]
+}
+

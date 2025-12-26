@@ -1,0 +1,4 @@
+"""
+Core - Logique métier pure
+"""
+

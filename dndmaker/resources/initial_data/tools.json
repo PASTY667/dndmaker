@@ -1,0 +1,78 @@
+[
+  {
+    "name": "Outils d'alchimiste",
+    "price": "50 po",
+    "weight": "4 kg"
+  },
+  {
+    "name": "Outils de bricoleur",
+    "price": "5 po",
+    "weight": "2.5 kg"
+  },
+  {
+    "name": "Outils de calligraphe",
+    "price": "10 po",
+    "weight": "2.5 kg"
+  },
+  {
+    "name": "Outils de cartographe",
+    "price": "15 po",
+    "weight": "0 kg"
+  },
+  {
+    "name": "Outils de cordonnier",
+    "price": "5 po",
+    "weight": "2.5 kg"
+  },
+  {
+    "name": "Outils de cuisinier",
+    "price": "1 po",
+    "weight": "4.5 kg"
+  },
+  {
+    "name": "Outils de forgeron",
+    "price": "20 po",
+    "weight": "4 kg"
+  },
+  {
+    "name": "Outils de menuisier",
+    "price": "8 po",
+    "weight": "2.5 kg"
+  },
+  {
+    "name": "Outils de peintre",
+    "price": "10 po",
+    "weight": "2.5 kg"
+  },
+  {
+    "name": "Outils de potier",
+    "price": "10 po",
+    "weight": "1.5 kg"
+  },
+  {
+    "name": "Outils de tanneur",
+    "price": "5 po",
+    "weight": "2.5 kg"
+  },
+  {
+    "name": "Outils de tisserand",
+    "price": "1 po",
+    "weight": "2.5 kg"
+  },
+  {
+    "name": "Outils de voleur",
+    "price": "25 po",
+    "weight": "0.5 kg"
+  },
+  {
+    "name": "Jeu d'outils de maçon",
+    "price": "10 po",
+    "weight": "4 kg"
+  },
+  {
+    "name": "Jeu d'outils de navigateur",
+    "price": "25 po",
+    "weight": "1 kg"
+  }
+]
+

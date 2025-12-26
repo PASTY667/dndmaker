@@ -1,0 +1,983 @@
+[
+  {
+    "name": "Créature minuscule",
+    "level": 0,
+    "type": "vivante",
+    "size": "minuscule",
+    "ac": 16,
+    "hp": 1,
+    "initiative": 19,
+    "stats": {
+      "strength": 6,
+      "dexterity": 18,
+      "constitution": 6,
+      "intelligence": 10,
+      "wisdom": 10,
+      "charisma": 10
+    },
+    "archetype": "inférieur",
+    "challenge": "0"
+  },
+  {
+    "name": "Créature très petite",
+    "level": 0,
+    "type": "vivante",
+    "size": "très petite",
+    "ac": 15,
+    "hp": 2,
+    "initiative": 17,
+    "stats": {
+      "strength": 7,
+      "dexterity": 16,
+      "constitution": 7,
+      "intelligence": 10,
+      "wisdom": 10,
+      "charisma": 10
+    },
+    "archetype": "inférieur",
+    "challenge": "0"
+  },
+  {
+    "name": "Gobelin de base",
+    "level": 0,
+    "type": "humanoid",
+    "size": "petit",
+    "ac": 14,
+    "hp": 3,
+    "initiative": 15,
+    "stats": {
+      "strength": 9,
+      "dexterity": 14,
+      "constitution": 9,
+      "intelligence": 8,
+      "wisdom": 10,
+      "charisma": 8
+    },
+    "archetype": "standard",
+    "challenge": "0"
+  },
+  {
+    "name": "Kobold de base",
+    "level": 0,
+    "type": "humanoid",
+    "size": "petit",
+    "ac": 14,
+    "hp": 3,
+    "initiative": 15,
+    "stats": {
+      "strength": 9,
+      "dexterity": 14,
+      "constitution": 9,
+      "intelligence": 10,
+      "wisdom": 10,
+      "charisma": 8
+    },
+    "archetype": "standard",
+    "challenge": "0"
+  },
+  {
+    "name": "Aigle",
+    "level": 0,
+    "type": "vivante",
+    "size": "très petite",
+    "ac": 15,
+    "hp": 2,
+    "initiative": 17,
+    "stats": {
+      "strength": 7,
+      "dexterity": 16,
+      "constitution": 16,
+      "intelligence": 6,
+      "wisdom": 18,
+      "charisma": 10
+    },
+    "archetype": "standard",
+    "challenge": "1/2"
+  },
+  {
+    "name": "Gobelin élite",
+    "level": 0,
+    "type": "humanoid",
+    "size": "petit",
+    "ac": 15,
+    "hp": 13,
+    "initiative": 15,
+    "stats": {
+      "strength": 9,
+      "dexterity": 14,
+      "constitution": 9,
+      "intelligence": 8,
+      "wisdom": 10,
+      "charisma": 8
+    },
+    "archetype": "standard",
+    "boss_type": "standard",
+    "boss_rank": "1/2",
+    "challenge": "1/2"
+  },
+  {
+    "name": "Hobgobelin de base",
+    "level": 0,
+    "type": "humanoid",
+    "size": "moyen",
+    "ac": 14,
+    "hp": 10,
+    "initiative": 12,
+    "stats": {
+      "strength": 12,
+      "dexterity": 12,
+      "constitution": 12,
+      "intelligence": 10,
+      "wisdom": 10,
+      "charisma": 8
+    },
+    "archetype": "standard",
+    "challenge": "1/2"
+  },
+  {
+    "name": "Orque",
+    "level": 0,
+    "type": "humanoid",
+    "size": "moyen",
+    "ac": 14,
+    "hp": 9,
+    "initiative": 12,
+    "stats": {
+      "strength": 12,
+      "dexterity": 12,
+      "constitution": 12,
+      "intelligence": 8,
+      "wisdom": 10,
+      "charisma": 8
+    },
+    "archetype": "standard",
+    "challenge": "1/2"
+  },
+  {
+    "name": "Rat géant",
+    "level": 0,
+    "type": "vivante",
+    "size": "petit",
+    "ac": 13,
+    "hp": 4,
+    "initiative": 13,
+    "stats": {
+      "strength": 12,
+      "dexterity": 12,
+      "constitution": 12,
+      "intelligence": 6,
+      "wisdom": 14,
+      "charisma": 6
+    },
+    "archetype": "puissant",
+    "challenge": "1/2"
+  },
+  {
+    "name": "Strige",
+    "level": 0,
+    "type": "vivante",
+    "size": "très petite",
+    "ac": 15,
+    "hp": 2,
+    "initiative": 12,
+    "stats": {
+      "strength": 7,
+      "dexterity": 16,
+      "constitution": 7,
+      "intelligence": 6,
+      "wisdom": 14,
+      "charisma": 6
+    },
+    "archetype": "standard",
+    "challenge": "1/2"
+  },
+  {
+    "name": "Chef gobelin",
+    "level": 1,
+    "type": "humanoid",
+    "size": "petit",
+    "ac": 15,
+    "hp": 24,
+    "initiative": 13,
+    "stats": {
+      "strength": 12,
+      "dexterity": 12,
+      "constitution": 12,
+      "intelligence": 10,
+      "wisdom": 10,
+      "charisma": 8
+    },
+    "archetype": "puissant",
+    "boss_type": "standard",
+    "boss_rank": "1",
+    "challenge": "1"
+  },
+  {
+    "name": "Cheval de guerre léger",
+    "level": 1,
+    "type": "vivante",
+    "size": "grand",
+    "ac": 13,
+    "hp": 15,
+    "initiative": 10,
+    "stats": {
+      "strength": 18,
+      "dexterity": 10,
+      "constitution": 18,
+      "intelligence": 6,
+      "wisdom": 14,
+      "charisma": 10
+    },
+    "archetype": "inférieur",
+    "challenge": "1"
+  },
+  {
+    "name": "Cheval de selle",
+    "level": 1,
+    "type": "vivante",
+    "size": "grand",
+    "ac": 13,
+    "hp": 15,
+    "initiative": 10,
+    "stats": {
+      "strength": 18,
+      "dexterity": 10,
+      "constitution": 18,
+      "intelligence": 6,
+      "wisdom": 10,
+      "charisma": 10
+    },
+    "archetype": "inférieur",
+    "challenge": "1"
+  },
+  {
+    "name": "Elémentaire d'air, petit",
+    "level": 1,
+    "type": "non-vivante",
+    "size": "petit",
+    "ac": 15,
+    "hp": 13,
+    "initiative": 17,
+    "stats": {
+      "strength": 9,
+      "dexterity": 20,
+      "constitution": 9,
+      "intelligence": 6,
+      "wisdom": 10,
+      "charisma": 8
+    },
+    "archetype": "standard",
+    "boss_type": "standard",
+    "boss_rank": "1",
+    "challenge": "1"
+  },
+  {
+    "name": "Elémentaire d'eau, petit",
+    "level": 1,
+    "type": "non-vivante",
+    "size": "petit",
+    "ac": 15,
+    "hp": 23,
+    "initiative": 14,
+    "stats": {
+      "strength": 9,
+      "dexterity": 14,
+      "constitution": 9,
+      "intelligence": 6,
+      "wisdom": 10,
+      "charisma": 8
+    },
+    "archetype": "standard",
+    "boss_type": "standard",
+    "boss_rank": "1",
+    "challenge": "1"
+  },
+  {
+    "name": "Elémentaire de feu, petit",
+    "level": 1,
+    "type": "non-vivante",
+    "size": "petit",
+    "ac": 15,
+    "hp": 13,
+    "initiative": 14,
+    "stats": {
+      "strength": 9,
+      "dexterity": 14,
+      "constitution": 9,
+      "intelligence": 6,
+      "wisdom": 10,
+      "charisma": 8
+    },
+    "archetype": "standard",
+    "boss_type": "standard",
+    "boss_rank": "1",
+    "challenge": "1"
+  },
+  {
+    "name": "Elémentaire de terre, petit",
+    "level": 1,
+    "type": "non-vivante",
+    "size": "petit",
+    "ac": 18,
+    "hp": 13,
+    "initiative": 14,
+    "stats": {
+      "strength": 9,
+      "dexterity": 14,
+      "constitution": 9,
+      "intelligence": 6,
+      "wisdom": 10,
+      "charisma": 8
+    },
+    "archetype": "standard",
+    "boss_type": "standard",
+    "boss_rank": "1",
+    "challenge": "1"
+  },
+  {
+    "name": "Gnoll de base",
+    "level": 1,
+    "type": "humanoid",
+    "size": "moyen",
+    "ac": 15,
+    "hp": 15,
+    "initiative": 10,
+    "stats": {
+      "strength": 16,
+      "dexterity": 10,
+      "constitution": 16,
+      "intelligence": 8,
+      "wisdom": 10,
+      "charisma": 8
+    },
+    "archetype": "puissant",
+    "challenge": "1"
+  },
+  {
+    "name": "Homme-lézard de base",
+    "level": 1,
+    "type": "humanoid",
+    "size": "moyen",
+    "ac": 15,
+    "hp": 15,
+    "initiative": 10,
+    "stats": {
+      "strength": 16,
+      "dexterity": 10,
+      "constitution": 16,
+      "intelligence": 8,
+      "wisdom": 10,
+      "charisma": 8
+    },
+    "archetype": "puissant",
+    "challenge": "1"
+  },
+  {
+    "name": "Pixie",
+    "level": 1,
+    "type": "humanoid",
+    "size": "petit",
+    "ac": 15,
+    "hp": 2,
+    "initiative": 24,
+    "stats": {
+      "strength": 8,
+      "dexterity": 18,
+      "constitution": 8,
+      "intelligence": 14,
+      "wisdom": 14,
+      "charisma": 14
+    },
+    "archetype": "rapide",
+    "challenge": "1"
+  },
+  {
+    "name": "Loup",
+    "level": 1,
+    "type": "vivante",
+    "size": "moyen",
+    "ac": 14,
+    "hp": 9,
+    "initiative": 12,
+    "stats": {
+      "strength": 12,
+      "dexterity": 12,
+      "constitution": 12,
+      "intelligence": 6,
+      "wisdom": 14,
+      "charisma": 8
+    },
+    "archetype": "standard",
+    "challenge": "1"
+  },
+  {
+    "name": "Squelette de base",
+    "level": 1,
+    "type": "non-vivante",
+    "size": "moyen",
+    "ac": 14,
+    "hp": 9,
+    "initiative": 12,
+    "stats": {
+      "strength": 12,
+      "dexterity": 12,
+      "constitution": 12,
+      "intelligence": 6,
+      "wisdom": 8,
+      "charisma": 6
+    },
+    "archetype": "standard",
+    "challenge": "1"
+  },
+  {
+    "name": "Rat-garou infecté",
+    "level": 1,
+    "type": "vivante",
+    "size": "moyen",
+    "ac": 14,
+    "hp": 9,
+    "initiative": 18,
+    "stats": {
+      "strength": 12,
+      "dexterity": 12,
+      "constitution": 12,
+      "intelligence": 8,
+      "wisdom": 14,
+      "charisma": 6
+    },
+    "archetype": "standard",
+    "challenge": "1"
+  },
+  {
+    "name": "Ange",
+    "level": 3,
+    "type": "céleste",
+    "size": "moyen",
+    "ac": 18,
+    "hp": 45,
+    "initiative": 15,
+    "stats": {
+      "strength": 18,
+      "dexterity": 14,
+      "constitution": 18,
+      "intelligence": 10,
+      "wisdom": 18,
+      "charisma": 18
+    },
+    "archetype": "standard",
+    "challenge": "3"
+  },
+  {
+    "name": "Ankheg",
+    "level": 2,
+    "type": "vivante",
+    "size": "grand",
+    "ac": 16,
+    "hp": 25,
+    "initiative": 10,
+    "stats": {
+      "strength": 17,
+      "dexterity": 10,
+      "constitution": 15,
+      "intelligence": 1,
+      "wisdom": 13,
+      "charisma": 6
+    },
+    "archetype": "standard",
+    "challenge": "2"
+  },
+  {
+    "name": "Barghest",
+    "level": 3,
+    "type": "fiélon",
+    "size": "grand",
+    "ac": 17,
+    "hp": 35,
+    "initiative": 12,
+    "stats": {
+      "strength": 17,
+      "dexterity": 14,
+      "constitution": 15,
+      "intelligence": 10,
+      "wisdom": 13,
+      "charisma": 10
+    },
+    "archetype": "standard",
+    "challenge": "3"
+  },
+  {
+    "name": "Basilic",
+    "level": 4,
+    "type": "vivante",
+    "size": "moyen",
+    "ac": 15,
+    "hp": 52,
+    "initiative": 8,
+    "stats": {
+      "strength": 16,
+      "dexterity": 8,
+      "constitution": 15,
+      "intelligence": 2,
+      "wisdom": 8,
+      "charisma": 7
+    },
+    "archetype": "standard",
+    "challenge": "4"
+  },
+  {
+    "name": "Béhir",
+    "level": 6,
+    "type": "vivante",
+    "size": "très grand",
+    "ac": 17,
+    "hp": 93,
+    "initiative": 10,
+    "stats": {
+      "strength": 23,
+      "dexterity": 10,
+      "constitution": 18,
+      "intelligence": 7,
+      "wisdom": 12,
+      "charisma": 12
+    },
+    "archetype": "puissant",
+    "challenge": "6"
+  },
+  {
+    "name": "Bison",
+    "level": 1,
+    "type": "vivante",
+    "size": "grand",
+    "ac": 13,
+    "hp": 19,
+    "initiative": 10,
+    "stats": {
+      "strength": 19,
+      "dexterity": 10,
+      "constitution": 16,
+      "intelligence": 2,
+      "wisdom": 10,
+      "charisma": 5
+    },
+    "archetype": "standard",
+    "challenge": "1"
+  },
+  {
+    "name": "Bulette",
+    "level": 5,
+    "type": "vivante",
+    "size": "grand",
+    "ac": 17,
+    "hp": 94,
+    "initiative": 10,
+    "stats": {
+      "strength": 19,
+      "dexterity": 11,
+      "constitution": 21,
+      "intelligence": 2,
+      "wisdom": 10,
+      "charisma": 5
+    },
+    "archetype": "puissant",
+    "challenge": "5"
+  },
+  {
+    "name": "Calmar géant",
+    "level": 5,
+    "type": "vivante",
+    "size": "très grand",
+    "ac": 13,
+    "hp": 90,
+    "initiative": 10,
+    "stats": {
+      "strength": 20,
+      "dexterity": 13,
+      "constitution": 18,
+      "intelligence": 7,
+      "wisdom": 12,
+      "charisma": 12
+    },
+    "archetype": "standard",
+    "challenge": "5"
+  },
+  {
+    "name": "Centaure",
+    "level": 2,
+    "type": "humanoid",
+    "size": "grand",
+    "ac": 12,
+    "hp": 45,
+    "initiative": 10,
+    "stats": {
+      "strength": 18,
+      "dexterity": 14,
+      "constitution": 14,
+      "intelligence": 9,
+      "wisdom": 13,
+      "charisma": 11
+    },
+    "archetype": "standard",
+    "challenge": "2"
+  },
+  {
+    "name": "Chauve-souris géante",
+    "level": 1,
+    "type": "vivante",
+    "size": "grand",
+    "ac": 13,
+    "hp": 22,
+    "initiative": 16,
+    "stats": {
+      "strength": 15,
+      "dexterity": 16,
+      "constitution": 11,
+      "intelligence": 2,
+      "wisdom": 12,
+      "charisma": 6
+    },
+    "archetype": "standard",
+    "challenge": "1"
+  },
+  {
+    "name": "Cheval",
+    "level": 1,
+    "type": "vivante",
+    "size": "grand",
+    "ac": 10,
+    "hp": 19,
+    "initiative": 10,
+    "stats": {
+      "strength": 16,
+      "dexterity": 10,
+      "constitution": 12,
+      "intelligence": 2,
+      "wisdom": 11,
+      "charisma": 7
+    },
+    "archetype": "inférieur",
+    "challenge": "1/4"
+  },
+  {
+    "name": "Chien infernal",
+    "level": 2,
+    "type": "fiélon",
+    "size": "moyen",
+    "ac": 15,
+    "hp": 39,
+    "initiative": 12,
+    "stats": {
+      "strength": 15,
+      "dexterity": 12,
+      "constitution": 13,
+      "intelligence": 10,
+      "wisdom": 11,
+      "charisma": 10
+    },
+    "archetype": "standard",
+    "challenge": "2"
+  },
+  {
+    "name": "Chimère",
+    "level": 6,
+    "type": "vivante",
+    "size": "grand",
+    "ac": 14,
+    "hp": 114,
+    "initiative": 11,
+    "stats": {
+      "strength": 19,
+      "dexterity": 11,
+      "constitution": 19,
+      "intelligence": 3,
+      "wisdom": 14,
+      "charisma": 10
+    },
+    "archetype": "standard",
+    "challenge": "6"
+  },
+  {
+    "name": "Cockatrice",
+    "level": 1,
+    "type": "vivante",
+    "size": "petit",
+    "ac": 11,
+    "hp": 27,
+    "initiative": 11,
+    "stats": {
+      "strength": 6,
+      "dexterity": 12,
+      "constitution": 12,
+      "intelligence": 2,
+      "wisdom": 13,
+      "charisma": 5
+    },
+    "archetype": "standard",
+    "challenge": "1/2"
+  },
+  {
+    "name": "Crocodile",
+    "level": 1,
+    "type": "vivante",
+    "size": "grand",
+    "ac": 12,
+    "hp": 19,
+    "initiative": 10,
+    "stats": {
+      "strength": 15,
+      "dexterity": 10,
+      "constitution": 13,
+      "intelligence": 2,
+      "wisdom": 12,
+      "charisma": 5
+    },
+    "archetype": "standard",
+    "challenge": "1/2"
+  },
+  {
+    "name": "Cube gélatineux",
+    "level": 2,
+    "type": "vivante",
+    "size": "grand",
+    "ac": 6,
+    "hp": 84,
+    "initiative": 8,
+    "stats": {
+      "strength": 14,
+      "dexterity": 3,
+      "constitution": 20,
+      "intelligence": 1,
+      "wisdom": 6,
+      "charisma": 1
+    },
+    "archetype": "standard",
+    "challenge": "2"
+  },
+  {
+    "name": "Démon mineur",
+    "level": 3,
+    "type": "fiélon",
+    "size": "moyen",
+    "ac": 15,
+    "hp": 45,
+    "initiative": 12,
+    "stats": {
+      "strength": 13,
+      "dexterity": 15,
+      "constitution": 12,
+      "intelligence": 8,
+      "wisdom": 11,
+      "charisma": 10
+    },
+    "archetype": "standard",
+    "challenge": "3"
+  },
+  {
+    "name": "Destrier noir",
+    "level": 2,
+    "type": "fiélon",
+    "size": "grand",
+    "ac": 14,
+    "hp": 45,
+    "initiative": 10,
+    "stats": {
+      "strength": 18,
+      "dexterity": 12,
+      "constitution": 15,
+      "intelligence": 8,
+      "wisdom": 13,
+      "charisma": 8
+    },
+    "archetype": "standard",
+    "challenge": "2"
+  },
+  {
+    "name": "Diable mineur",
+    "level": 3,
+    "type": "fiélon",
+    "size": "moyen",
+    "ac": 16,
+    "hp": 52,
+    "initiative": 11,
+    "stats": {
+      "strength": 16,
+      "dexterity": 14,
+      "constitution": 15,
+      "intelligence": 11,
+      "wisdom": 10,
+      "charisma": 13
+    },
+    "archetype": "standard",
+    "challenge": "3"
+  },
+  {
+    "name": "Dinosaure (petit)",
+    "level": 2,
+    "type": "vivante",
+    "size": "grand",
+    "ac": 13,
+    "hp": 38,
+    "initiative": 10,
+    "stats": {
+      "strength": 19,
+      "dexterity": 10,
+      "constitution": 17,
+      "intelligence": 2,
+      "wisdom": 12,
+      "charisma": 5
+    },
+    "archetype": "standard",
+    "challenge": "2"
+  },
+  {
+    "name": "Doppleganger",
+    "level": 3,
+    "type": "humanoid",
+    "size": "moyen",
+    "ac": 14,
+    "hp": 52,
+    "initiative": 12,
+    "stats": {
+      "strength": 11,
+      "dexterity": 18,
+      "constitution": 14,
+      "intelligence": 12,
+      "wisdom": 13,
+      "charisma": 14
+    },
+    "archetype": "standard",
+    "challenge": "3"
+  },
+  {
+    "name": "Dragonnet",
+    "level": 2,
+    "type": "dragon",
+    "size": "moyen",
+    "ac": 16,
+    "hp": 32,
+    "initiative": 12,
+    "stats": {
+      "strength": 15,
+      "dexterity": 12,
+      "constitution": 13,
+      "intelligence": 10,
+      "wisdom": 11,
+      "charisma": 10
+    },
+    "archetype": "standard",
+    "challenge": "2"
+  },
+  {
+    "name": "Drider",
+    "level": 4,
+    "type": "humanoid",
+    "size": "grand",
+    "ac": 19,
+    "hp": 123,
+    "initiative": 13,
+    "stats": {
+      "strength": 16,
+      "dexterity": 16,
+      "constitution": 15,
+      "intelligence": 13,
+      "wisdom": 14,
+      "charisma": 12
+    },
+    "archetype": "standard",
+    "challenge": "4"
+  },
+  {
+    "name": "Dryade",
+    "level": 1,
+    "type": "végétative",
+    "size": "moyen",
+    "ac": 11,
+    "hp": 22,
+    "initiative": 10,
+    "stats": {
+      "strength": 10,
+      "dexterity": 12,
+      "constitution": 11,
+      "intelligence": 14,
+      "wisdom": 15,
+      "charisma": 18
+    },
+    "archetype": "standard",
+    "challenge": "1"
+  },
+  {
+    "name": "Eléphant",
+    "level": 4,
+    "type": "vivante",
+    "size": "très grand",
+    "ac": 12,
+    "hp": 76,
+    "initiative": 10,
+    "stats": {
+      "strength": 22,
+      "dexterity": 9,
+      "constitution": 17,
+      "intelligence": 3,
+      "wisdom": 11,
+      "charisma": 6
+    },
+    "archetype": "standard",
+    "challenge": "4"
+  },
+  {
+    "name": "Elfe des bois",
+    "level": 1,
+    "type": "humanoid",
+    "size": "moyen",
+    "ac": 15,
+    "hp": 16,
+    "initiative": 15,
+    "stats": {
+      "strength": 10,
+      "dexterity": 16,
+      "constitution": 12,
+      "intelligence": 13,
+      "wisdom": 14,
+      "charisma": 11
+    },
+    "archetype": "standard",
+    "challenge": "1"
+  },
+  {
+    "name": "Elfe noir (Drow)",
+    "level": 2,
+    "type": "humanoid",
+    "size": "moyen",
+    "ac": 15,
+    "hp": 33,
+    "initiative": 16,
+    "stats": {
+      "strength": 10,
+      "dexterity": 14,
+      "constitution": 10,
+      "intelligence": 11,
+      "wisdom": 11,
+      "charisma": 12
+    },
+    "archetype": "standard",
+    "challenge": "2"
+  },
+  {
+    "name": "Ettin",
+    "level": 4,
+    "type": "humanoid",
+    "size": "grand",
+    "ac": 12,
+    "hp": 85,
+    "initiative": 8,
+    "stats": {
+      "strength": 21,
+      "dexterity": 8,
+      "constitution": 17,
+      "intelligence": 6,
+      "wisdom": 10,
+      "charisma": 8
+    },
+    "archetype": "standard",
+    "challenge": "4"
+  }
+]

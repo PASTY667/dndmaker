@@ -1,0 +1,263 @@
+[
+  {
+    "name": "Dague",
+    "type": "courante",
+    "category": "corps_à_corps",
+    "price": "2 po",
+    "damage": "1d4",
+    "damage_type": "perforant",
+    "weight": "0.5 kg",
+    "properties": ["finesse", "lancer", "légère"],
+    "range": "6/18"
+  },
+  {
+    "name": "Gourdin",
+    "type": "courante",
+    "category": "corps_à_corps",
+    "price": "1 pa",
+    "damage": "1d4",
+    "damage_type": "contondant",
+    "weight": "1 kg",
+    "properties": ["légère"]
+  },
+  {
+    "name": "Hachette",
+    "type": "courante",
+    "category": "corps_à_corps",
+    "price": "5 po",
+    "damage": "1d6",
+    "damage_type": "tranchant",
+    "weight": "1 kg",
+    "properties": ["lancer", "légère"],
+    "range": "6/18"
+  },
+  {
+    "name": "Javelot",
+    "type": "courante",
+    "category": "corps_à_corps",
+    "price": "5 pa",
+    "damage": "1d6",
+    "damage_type": "perforant",
+    "weight": "1 kg",
+    "properties": ["lancer"],
+    "range": "9/36"
+  },
+  {
+    "name": "Masse d'armes",
+    "type": "courante",
+    "category": "corps_à_corps",
+    "price": "5 po",
+    "damage": "1d6",
+    "damage_type": "contondant",
+    "weight": "2 kg",
+    "properties": []
+  },
+  {
+    "name": "Lance",
+    "type": "courante",
+    "category": "corps_à_corps",
+    "price": "1 po",
+    "damage": "1d6",
+    "damage_type": "perforant",
+    "weight": "1.5 kg",
+    "properties": ["lancer", "polyvalente"],
+    "range": "6/18"
+  },
+  {
+    "name": "Marteau léger",
+    "type": "courante",
+    "category": "corps_à_corps",
+    "price": "2 po",
+    "damage": "1d4",
+    "damage_type": "contondant",
+    "weight": "1 kg",
+    "properties": ["lancer", "légère"],
+    "range": "6/18"
+  },
+  {
+    "name": "Faucille",
+    "type": "courante",
+    "category": "corps_à_corps",
+    "price": "1 po",
+    "damage": "1d4",
+    "damage_type": "tranchant",
+    "weight": "1 kg",
+    "properties": ["légère"]
+  },
+  {
+    "name": "Épée courte",
+    "type": "courante",
+    "category": "corps_à_corps",
+    "price": "10 po",
+    "damage": "1d6",
+    "damage_type": "perforant",
+    "weight": "1 kg",
+    "properties": ["finesse", "légère"]
+  },
+  {
+    "name": "Bâton",
+    "type": "courante",
+    "category": "corps_à_corps",
+    "price": "2 pa",
+    "damage": "1d6",
+    "damage_type": "contondant",
+    "weight": "2 kg",
+    "properties": ["polyvalente"]
+  },
+  {
+    "name": "Arc court",
+    "type": "courante",
+    "category": "distance",
+    "price": "25 po",
+    "damage": "1d6",
+    "damage_type": "perforant",
+    "weight": "1 kg",
+    "properties": ["munition", "à deux mains"],
+    "range": "24/96"
+  },
+  {
+    "name": "Fronde",
+    "type": "courante",
+    "category": "distance",
+    "price": "1 pa",
+    "damage": "1d4",
+    "damage_type": "contondant",
+    "weight": "0 kg",
+    "properties": ["munition"],
+    "range": "9/36"
+  },
+  {
+    "name": "Épée longue",
+    "type": "guerre",
+    "category": "corps_à_corps",
+    "price": "15 po",
+    "damage": "1d8",
+    "damage_type": "tranchant",
+    "weight": "1.5 kg",
+    "properties": ["polyvalente"]
+  },
+  {
+    "name": "Hache de bataille",
+    "type": "guerre",
+    "category": "corps_à_corps",
+    "price": "10 po",
+    "damage": "1d8",
+    "damage_type": "tranchant",
+    "weight": "2 kg",
+    "properties": ["polyvalente"]
+  },
+  {
+    "name": "Marteau de guerre",
+    "type": "guerre",
+    "category": "corps_à_corps",
+    "price": "15 po",
+    "damage": "1d8",
+    "damage_type": "contondant",
+    "weight": "2 kg",
+    "properties": ["polyvalente"]
+  },
+  {
+    "name": "Rapière",
+    "type": "guerre",
+    "category": "corps_à_corps",
+    "price": "25 po",
+    "damage": "1d8",
+    "damage_type": "perforant",
+    "weight": "1 kg",
+    "properties": ["finesse"]
+  },
+  {
+    "name": "Cimeterre",
+    "type": "guerre",
+    "category": "corps_à_corps",
+    "price": "25 po",
+    "damage": "1d6",
+    "damage_type": "tranchant",
+    "weight": "1.5 kg",
+    "properties": ["finesse", "légère"]
+  },
+  {
+    "name": "Glaive",
+    "type": "guerre",
+    "category": "corps_à_corps",
+    "price": "20 po",
+    "damage": "1d10",
+    "damage_type": "tranchant",
+    "weight": "3 kg",
+    "properties": ["lourde", "à deux mains", "allonge"]
+  },
+  {
+    "name": "Hallebarde",
+    "type": "guerre",
+    "category": "corps_à_corps",
+    "price": "20 po",
+    "damage": "1d10",
+    "damage_type": "tranchant",
+    "weight": "3 kg",
+    "properties": ["lourde", "à deux mains", "allonge"]
+  },
+  {
+    "name": "Lance d'arçon",
+    "type": "guerre",
+    "category": "corps_à_corps",
+    "price": "10 po",
+    "damage": "1d12",
+    "damage_type": "perforant",
+    "weight": "3 kg",
+    "properties": ["lourde", "à deux mains", "allonge", "spéciale"]
+  },
+  {
+    "name": "Épée à deux mains",
+    "type": "guerre",
+    "category": "corps_à_corps",
+    "price": "50 po",
+    "damage": "2d6",
+    "damage_type": "tranchant",
+    "weight": "3 kg",
+    "properties": ["lourde", "à deux mains"]
+  },
+  {
+    "name": "Hache à deux mains",
+    "type": "guerre",
+    "category": "corps_à_corps",
+    "price": "30 po",
+    "damage": "1d12",
+    "damage_type": "tranchant",
+    "weight": "3.5 kg",
+    "properties": ["lourde", "à deux mains"]
+  },
+  {
+    "name": "Arc long",
+    "type": "guerre",
+    "category": "distance",
+    "price": "50 po",
+    "damage": "1d8",
+    "damage_type": "perforant",
+    "weight": "1 kg",
+    "properties": ["munition", "à deux mains", "lourde"],
+    "range": "45/180"
+  },
+  {
+    "name": "Arbalète légère",
+    "type": "guerre",
+    "category": "distance",
+    "price": "25 po",
+    "damage": "1d8",
+    "damage_type": "perforant",
+    "weight": "2.5 kg",
+    "properties": ["munition", "à deux mains", "rechargement"],
+    "range": "24/96"
+  },
+  {
+    "name": "Arbalète lourde",
+    "type": "guerre",
+    "category": "distance",
+    "price": "50 po",
+    "damage": "1d10",
+    "damage_type": "perforant",
+    "weight": "9 kg",
+    "properties": ["munition", "à deux mains", "rechargement", "lourde"],
+    "range": "30/120"
+  }
+]
+

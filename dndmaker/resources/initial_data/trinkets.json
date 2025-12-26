@@ -1,0 +1,103 @@
+[
+  {
+    "name": "Petit miroir en argent",
+    "price": "5 po",
+    "description": "Un petit miroir en argent dans un cadre en bois"
+  },
+  {
+    "name": "Boussole",
+    "price": "10 po",
+    "description": "Une boussole qui pointe toujours vers le nord"
+  },
+  {
+    "name": "Bougie",
+    "price": "1 pc",
+    "description": "Une bougie qui brûle pendant 1 heure"
+  },
+  {
+    "name": "Torche",
+    "price": "1 pc",
+    "description": "Une torche qui brûle pendant 1 heure"
+  },
+  {
+    "name": "Corde (15 mètres)",
+    "price": "1 po",
+    "description": "15 mètres de corde en chanvre"
+  },
+  {
+    "name": "Piton",
+    "price": "5 pa",
+    "description": "Un piton en fer"
+  },
+  {
+    "name": "Sac à dos",
+    "price": "2 po",
+    "description": "Un sac à dos en cuir"
+  },
+  {
+    "name": "Bourse",
+    "price": "5 pa",
+    "description": "Une bourse en cuir pour les pièces"
+  },
+  {
+    "name": "Gourde",
+    "price": "2 pa",
+    "description": "Une gourde en cuir"
+  },
+  {
+    "name": "Rations (1 jour)",
+    "price": "5 pa",
+    "description": "Rations pour une journée"
+  },
+  {
+    "name": "Tente (2 personnes)",
+    "price": "2 po",
+    "description": "Une tente pour deux personnes"
+  },
+  {
+    "name": "Briquet",
+    "price": "5 pa",
+    "description": "Un briquet en fer et silex"
+  },
+  {
+    "name": "Lampe à huile",
+    "price": "5 pa",
+    "description": "Une lampe à huile"
+  },
+  {
+    "name": "Fiole d'huile",
+    "price": "1 pa",
+    "description": "Une fiole d'huile pour lampe"
+  },
+  {
+    "name": "Sac de couchage",
+    "price": "1 po",
+    "description": "Un sac de couchage"
+  },
+  {
+    "name": "Bâton (1 mètre)",
+    "price": "1 pa",
+    "description": "Un bâton d'un mètre"
+  },
+  {
+    "name": "Crayon",
+    "price": "1 pc",
+    "description": "Un crayon"
+  },
+  {
+    "name": "Parchemin",
+    "price": "1 pa",
+    "description": "Une feuille de parchemin"
+  },
+  {
+    "name": "Encre",
+    "price": "10 po",
+    "description": "Une fiole d'encre"
+  },
+  {
+    "name": "Plume",
+    "price": "2 pc",
+    "description": "Une plume d'oie"
+  }
+]
+
