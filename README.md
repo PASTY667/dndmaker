@@ -4,7 +4,7 @@
 
 ## 🎲 Compatibilité
 
-**DNDMaker** est conçu spécifiquement pour le système de jeu de rôle **Chroniques Oubliées** (CO). Il n'est **pas compatible** avec D&D (Dungeons & Dragons) ou d'autres systèmes de JDR.
+**DNDMaker** est conçu spécifiquement pour le système de jeu de rôle **Chroniques Oubliées**, une version simplifiée de D&D (CO). 
 
 ### Système supporté
 - ✅ **Chroniques Oubliées** (toutes les éditions)
