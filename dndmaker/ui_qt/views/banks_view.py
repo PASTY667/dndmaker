@@ -14,6 +14,7 @@ from ...models.bank import BankType, BankEntry
 from ...core.logger import UserActionLogger
 from ...core.i18n import tr
 from ..widgets.bank_entry_editor import BankEntryEditor
+from ..widgets.table_editor import TableEditor
 
 logger = UserActionLogger()
 
@@ -24,6 +25,7 @@ class BanksView(QWidget):
     def __init__(self, project_service: ProjectService, parent=None):
         super().__init__(parent)
         self.project_service = project_service
+        self.custom_table_tabs = {}  # {table_id: tab_index}
         self._init_ui()
         # Rafraîchir après l'initialisation pour charger les données
         self.refresh()
@@ -39,11 +41,22 @@ class BanksView(QWidget):
         self.title_label.setStyleSheet("font-size: 18px; font-weight: bold;")
         layout.addWidget(self.title_label)
         
+        # Bouton pour ajouter une table personnalisée
+        table_btn_layout = QHBoxLayout()
+        table_btn_layout.addStretch()
+        add_table_btn = QPushButton(tr("table.add_table"))
+        add_table_btn.clicked.connect(self._add_custom_table)
+        table_btn_layout.addWidget(add_table_btn)
+        layout.addLayout(table_btn_layout)
+        
         # Onglets pour chaque type de banque
         self.tabs = QTabWidget()
         for bank_type in BankType:
             self.tabs.addTab(self._create_bank_tab(bank_type), bank_type.value)
         layout.addWidget(self.tabs)
+        
+        # Dictionnaire pour stocker les IDs des tables et leurs index d'onglets
+        self.custom_table_tabs = {}  # {table_id: tab_index}
     
     def _get_table_columns(self, bank_type: BankType) -> list[str]:
         """Retourne les colonnes pour un type de banque"""
@@ -61,6 +74,10 @@ class BanksView(QWidget):
             return ["Nom", "Prix", "Description"]
         elif bank_type == BankType.WEAPONS:
             return ["Nom", "Type", "Catégorie", "Dégâts", "Type dégâts", "Prix", "Poids", "Propriétés", "Portée"]
+        elif bank_type == BankType.LOCATIONS:
+            return ["Nom", "Type", "Description", "Bestiaire"]
+        elif bank_type == BankType.FACTIONS:
+            return ["Nom", "Description"]
         else:
             return ["Valeur"]
     
@@ -143,6 +160,27 @@ class BanksView(QWidget):
                         row = table.rowCount()
                         table.insertRow(row)
                         self._populate_table_row(table, row, entry, bank_type, columns)
+        
+        # Rafraîchir les tables personnalisées (créer/mettre à jour les onglets)
+        if self.project_service.table_service:
+            tables = self.project_service.table_service.get_all_tables()
+            num_standard_tabs = len(BankType)
+            
+            # Supprimer tous les onglets de tables existants (en ordre décroissant)
+            tabs_to_remove = []
+            for i in range(self.tabs.count() - 1, num_standard_tabs - 1, -1):
+                tabs_to_remove.append(i)
+            for tab_index in tabs_to_remove:
+                self.tabs.removeTab(tab_index)
+            
+            # Réinitialiser le mapping
+            self.custom_table_tabs = {}
+            
+            # Recréer les onglets pour toutes les tables
+            for idx, table in enumerate(tables):
+                tab_widget = self._create_custom_table_tab(table)
+                tab_index = self.tabs.addTab(tab_widget, table.name)
+                self.custom_table_tabs[table.id] = tab_index
     
     def _populate_table_row(self, table: QTableWidget, row: int, entry: BankEntry, bank_type: BankType, columns: list[str]):
         """Remplit une ligne du tableau avec les données d'une entrée"""
@@ -195,6 +233,26 @@ class BanksView(QWidget):
                 desc = desc[:47] + "..."
             table.setItem(row, 2, QTableWidgetItem(desc))
         
+        elif bank_type == BankType.LOCATIONS:
+            table.setItem(row, 0, QTableWidgetItem(entry.value))
+            table.setItem(row, 1, QTableWidgetItem(metadata.get('type', '')))
+            desc = metadata.get('description', '')
+            # Tronquer la description si trop longue
+            if len(desc) > 50:
+                desc = desc[:47] + "..."
+            table.setItem(row, 2, QTableWidgetItem(desc))
+            # Afficher le nombre de PNJ/créatures dans le bestiaire
+            bestiary = metadata.get('bestiary', [])
+            bestiary_count = len(bestiary) if isinstance(bestiary, list) else 0
+            table.setItem(row, 3, QTableWidgetItem(f"{bestiary_count} PNJ/Créature(s)"))
+        
+        elif bank_type == BankType.FACTIONS:
+            table.setItem(row, 0, QTableWidgetItem(entry.value))
+            desc = metadata.get('description', '')
+            if len(desc) > 100:
+                desc = desc[:97] + "..."
+            table.setItem(row, 1, QTableWidgetItem(desc))
+        
         elif bank_type == BankType.WEAPONS:
             properties = metadata.get('properties', [])
             table.setItem(row, 0, QTableWidgetItem(entry.value))
@@ -224,7 +282,7 @@ class BanksView(QWidget):
         
         try:
             # Ouvrir le formulaire d'édition
-            editor = BankEntryEditor(bank_type, entry=None, parent=self)
+            editor = BankEntryEditor(bank_type, entry=None, parent=self, project_service=self.project_service)
             if editor.exec() == QDialog.DialogCode.Accepted:
                 value, metadata = editor.get_entry_data()
                 
@@ -278,7 +336,7 @@ class BanksView(QWidget):
                 return
             
             # Ouvrir le formulaire d'édition
-            editor = BankEntryEditor(bank_type, entry=entry, parent=self)
+            editor = BankEntryEditor(bank_type, entry=entry, parent=self, project_service=self.project_service)
             if editor.exec() == QDialog.DialogCode.Accepted:
                 new_value, new_metadata = editor.get_entry_data()
                 
@@ -335,6 +393,114 @@ class BanksView(QWidget):
         except Exception as e:
             logger.exception(f"Erreur lors de la suppression d'entrée: {e}")
             QMessageBox.critical(self, "Erreur", f"Erreur: {str(e)}")
+    
+    def _add_custom_table(self):
+        """Ajoute une nouvelle table personnalisée"""
+        editor = TableEditor(project_service=self.project_service, parent=self)
+        if editor.exec() == QDialog.DialogCode.Accepted:
+            self.refresh()
+    
+    def _create_custom_table_tab(self, table) -> QWidget:
+        """Crée un onglet pour une table personnalisée"""
+        from ...models.custom_table import CustomTable
+        
+        widget = QWidget()
+        layout = QVBoxLayout(widget)
+        layout.setSpacing(10)
+        
+        # Boutons
+        button_layout = QHBoxLayout()
+        
+        edit_btn = QPushButton(tr("table.edit"))
+        edit_btn.clicked.connect(lambda: self._edit_custom_table_from_tab(table.id))
+        button_layout.addWidget(edit_btn)
+        
+        delete_btn = QPushButton(tr("table.delete"))
+        delete_btn.clicked.connect(lambda: self._delete_custom_table_from_tab(table.id))
+        button_layout.addWidget(delete_btn)
+        
+        button_layout.addStretch()
+        layout.addLayout(button_layout)
+        
+        # Tableau des lignes
+        data_table = QTableWidget()
+        data_table.setSelectionBehavior(QTableWidget.SelectionBehavior.SelectRows)
+        data_table.setSelectionMode(QTableWidget.SelectionMode.SingleSelection)
+        data_table.setEditTriggers(QTableWidget.EditTrigger.NoEditTriggers)
+        data_table.setAlternatingRowColors(True)
+        data_table.horizontalHeader().setStretchLastSection(True)
+        layout.addWidget(data_table)
+        
+        # Stocker les références
+        setattr(widget, 'data_table', data_table)
+        setattr(widget, 'table_id', table.id)
+        
+        # Remplir le tableau
+        self._refresh_custom_table_tab(widget, table)
+        
+        return widget
+    
+    def _refresh_custom_table_tab(self, widget: QWidget, table):
+        """Rafraîchit le contenu d'un onglet de table personnalisée"""
+        data_table = getattr(widget, 'data_table', None)
+        if not data_table:
+            return
+        
+        # Définir les colonnes selon le schéma
+        columns = [field.name for field in table.schema]
+        data_table.setColumnCount(len(columns))
+        data_table.setHorizontalHeaderLabels(columns)
+        
+        # Remplir avec les lignes
+        data_table.setRowCount(0)
+        for row_data in table.rows:
+            row = data_table.rowCount()
+            data_table.insertRow(row)
+            
+            for col, field in enumerate(table.schema):
+                value = row_data.get(field.name, '')
+                # Convertir selon le type
+                if field.field_type == 'boolean':
+                    display_value = tr("btn.yes") if value else tr("btn.no")
+                else:
+                    display_value = str(value)
+                
+                data_table.setItem(row, col, QTableWidgetItem(display_value))
+    
+    def _edit_custom_table_from_tab(self, table_id: str):
+        """Modifie une table depuis son onglet"""
+        if not self.project_service.table_service:
+            return
+        
+        table = self.project_service.table_service.get_table(table_id)
+        if not table:
+            return
+        
+        editor = TableEditor(table=table, project_service=self.project_service, parent=self)
+        if editor.exec() == QDialog.DialogCode.Accepted:
+            self.refresh()
+    
+    def _delete_custom_table_from_tab(self, table_id: str):
+        """Supprime une table depuis son onglet"""
+        if not self.project_service.table_service:
+            return
+        
+        table = self.project_service.table_service.get_table(table_id)
+        if not table:
+            return
+        
+        # Confirmation
+        reply = QMessageBox.question(
+            self, tr("msg.confirm"),
+            f"Êtes-vous sûr de vouloir supprimer la table '{table.name}' ?",
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No
+        )
+        if reply != QMessageBox.StandardButton.Yes:
+            return
+        
+        if self.project_service.table_service.delete_table(table_id):
+            self.project_service.save_project(f"Suppression de la table '{table.name}'")
+            self.refresh()
     
     def on_language_changed(self):
         """Met à jour les textes lors du changement de langue"""

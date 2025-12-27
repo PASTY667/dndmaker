@@ -1,5 +1,5 @@
 """
-Chargeur de projet
+Chargeur de campagne
 """
 
 from pathlib import Path
@@ -11,11 +11,11 @@ from .serializer import JSONEncoder
 
 
 class ProjectLoader:
-    """Chargeur de projet"""
+    """Chargeur de campagne"""
     
     @staticmethod
     def load_project(project_path: Path) -> Optional[Dict]:
-        """Charge un projet depuis un fichier"""
+        """Charge une campagne depuis un fichier"""
         # S'assurer que project_path est un Path
         if not isinstance(project_path, Path):
             project_path = Path(str(project_path))
@@ -48,7 +48,7 @@ class ProjectLoader:
     
     @staticmethod
     def save_project(project_path: Path, project_data: Dict) -> None:
-        """Sauvegarde un projet dans un fichier"""
+        """Sauvegarde une campagne dans un fichier"""
         # S'assurer que project_path est un Path
         if not isinstance(project_path, Path):
             project_path = Path(str(project_path))

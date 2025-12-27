@@ -92,6 +92,18 @@ class DataLoader:
         return []
     
     @staticmethod
+    def load_locations() -> List[Dict]:
+        """Charge la liste des lieux depuis le fichier JSON"""
+        try:
+            path = DataLoader._get_resource_path("locations.json")
+            if path.exists():
+                with open(path, 'r', encoding='utf-8') as f:
+                    return json.load(f)
+        except (IOError, json.JSONDecodeError):
+            pass
+        return []
+    
+    @staticmethod
     def initialize_banks(bank_service) -> None:
         """Initialise les banques avec les données par défaut si elles sont vides"""
         # Races par défaut (Chroniques Oubliées)
@@ -197,4 +209,18 @@ class DataLoader:
             weapon_name = weapon.get('name', '')
             if weapon_name and weapon_name not in existing_weapon_names:
                 bank_service.add_entry_to_bank(weapons_bank.id, weapon_name, weapon)
+        
+        # Lieux depuis le fichier JSON
+        locations_bank = bank_service.get_or_create_bank(BankType.LOCATIONS)
+        existing_location_names = {entry.value for entry in locations_bank.entries}
+        locations = DataLoader.load_locations()
+        for location in locations:
+            location_name = location.get('name', '')
+            if location_name and location_name not in existing_location_names:
+                metadata = {
+                    'type': location.get('type', ''),
+                    'description': location.get('description', ''),
+                    'bestiary': location.get('bestiary', [])  # Liste d'IDs de PNJ/créatures
+                }
+                bank_service.add_entry_to_bank(locations_bank.id, location_name, metadata)
 

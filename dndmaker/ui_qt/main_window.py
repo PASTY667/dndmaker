@@ -129,17 +129,17 @@ class MainWindow(QMainWindow):
         menubar = self.menuBar()
         
         # Menu Fichier
-        self.file_menu = menubar.addMenu(tr("project.title"))
+        self.file_menu = menubar.addMenu(tr("campaign.title"))
         self._update_file_menu()
         
         # Menu Édition
-        edit_menu = menubar.addMenu(tr("btn.edit", "Édition"))
+        self.edit_menu = menubar.addMenu(tr("menu.edit"))
         
         # Menu Aide
-        help_menu = menubar.addMenu(tr("msg.info", "Aide"))
-        about_action = QAction(tr("msg.info", "À propos"), self)
-        about_action.triggered.connect(self._show_about)
-        help_menu.addAction(about_action)
+        self.help_menu = menubar.addMenu(tr("menu.help"))
+        self.about_action = QAction(tr("msg.about"), self)
+        self.about_action.triggered.connect(self._show_about)
+        self.help_menu.addAction(self.about_action)
         
         # Bouton de changement de langue (en haut à droite)
         lang_button = QPushButton()
@@ -162,29 +162,53 @@ class MainWindow(QMainWindow):
         from PyQt6.QtWidgets import QInputDialog
         
         if Translator.get_language() == Language.ENGLISH:
-            title = "New project"
-            label = "Project name:"
+            title = "New Campaign"
+            label = "Campaign name:"
+            dir_dialog_title = "Choose where to save the campaign"
+            default_dir = str(Path.home() / "Documents" / "DNDMaker")
         else:
-            title = "Nouveau projet"
-            label = "Nom du projet:"
+            title = "Nouvelle campagne"
+            label = "Nom de la campagne:"
+            dir_dialog_title = "Choisir où sauvegarder la campagne"
+            default_dir = str(Path.home() / "Documents" / "DNDMaker")
         
+        # Demander le nom de la campagne
         name, ok = QInputDialog.getText(
             self,
             title,
             label
         )
-        if ok and name:
-            project_dir = Path.home() / "Documents" / "DNDMaker"
-            project_dir.mkdir(parents=True, exist_ok=True)
-            
-            try:
-                project = self.project_service.create_project(name, project_dir)
-                # Sauvegarder le dernier projet ouvert
-                self.config.set_last_project(self.project_service.project_path)
-                self.statusBar().showMessage(f"Projet '{name}' créé avec succès")
-                self._refresh_all_views()
-            except Exception as e:
-                QMessageBox.critical(self, "Erreur", f"Impossible de créer le projet: {str(e)}")
+        if not ok or not name:
+            return
+        
+        # Demander où sauvegarder la campagne
+        project_dir_str = QFileDialog.getExistingDirectory(
+            self,
+            dir_dialog_title,
+            default_dir,
+            QFileDialog.Option.ShowDirsOnly
+        )
+        
+        if not project_dir_str:
+            # L'utilisateur a annulé
+            return
+        
+        project_dir = Path(project_dir_str)
+        
+        try:
+            project = self.project_service.create_project(name, project_dir)
+            # Sauvegarder le dernier projet ouvert
+            self.config.set_last_project(self.project_service.project_path)
+            if Translator.get_language() == Language.ENGLISH:
+                self.statusBar().showMessage(f"Campaign '{name}' created successfully")
+            else:
+                self.statusBar().showMessage(f"Campagne '{name}' créée avec succès")
+            self._refresh_all_views()
+        except Exception as e:
+            if Translator.get_language() == Language.ENGLISH:
+                QMessageBox.critical(self, "Error", f"Could not create campaign: {str(e)}")
+            else:
+                QMessageBox.critical(self, "Erreur", f"Impossible de créer la campagne: {str(e)}")
     
     def _import_project(self, json_path: str):
         """Importe un projet depuis un fichier JSON"""
@@ -265,9 +289,14 @@ class MainWindow(QMainWindow):
                     start_dir = Path.cwd()
             
             # Ouvrir l'explorateur de fichiers standard
+            if Translator.get_language() == Language.ENGLISH:
+                dialog_title = "Open a Campaign - Select the campaign folder"
+            else:
+                dialog_title = "Ouvrir une campagne - Sélectionnez le dossier de la campagne"
+            
             project_path_str = QFileDialog.getExistingDirectory(
                 self,
-                "Ouvrir un projet - Sélectionnez le répertoire .dndmaker",
+                dialog_title,
                 str(start_dir) if start_dir else "",
                 QFileDialog.Option.ShowDirsOnly
             )
@@ -313,14 +342,22 @@ class MainWindow(QMainWindow):
                 self._refresh_all_views()
             else:
                 logger.warning(f"Impossible de charger le projet depuis: {project_path}")
-                error_msg = (
-                    f"Impossible de charger le projet depuis:\n{project_path}\n\n"
-                    f"Vérifiez que:\n"
-                    f"- Le répertoire existe\n"
-                    f"- Le fichier project.json est présent\n"
-                    f"- Le fichier project.json est valide\n\n"
-                    f"Le répertoire doit être un projet .dndmaker (ex: MonProjet.dndmaker)"
-                )
+                if Translator.get_language() == Language.ENGLISH:
+                    error_msg = (
+                        f"Unable to load campaign from:\n{project_path}\n\n"
+                        f"Please verify that:\n"
+                        f"- The directory exists\n"
+                        f"- The project.json file is present\n"
+                        f"- The project.json file is valid"
+                    )
+                else:
+                    error_msg = (
+                        f"Impossible de charger la campagne depuis:\n{project_path}\n\n"
+                        f"Vérifiez que:\n"
+                        f"- Le répertoire existe\n"
+                        f"- Le fichier project.json est présent\n"
+                        f"- Le fichier project.json est valide"
+                    )
                 QMessageBox.warning(self, "Erreur", error_msg)
         except Exception as e:
             logger.exception(f"Exception lors du chargement du projet: {e}")
@@ -438,7 +475,7 @@ class MainWindow(QMainWindow):
         """Met à jour les éléments de navigation"""
         self.nav_list.clear()
         self.nav_list.addItems([
-            tr("nav.project"),
+            tr("nav.campaign"),
             tr("nav.sessions"),
             tr("nav.scenes"),
             tr("nav.characters"),
@@ -454,17 +491,17 @@ class MainWindow(QMainWindow):
         
         self.file_menu.clear()
         
-        new_action = QAction(tr("project.new"), self)
+        new_action = QAction(tr("campaign.new"), self)
         new_action.setShortcut("Ctrl+N")
         new_action.triggered.connect(self._new_project)
         self.file_menu.addAction(new_action)
         
-        open_action = QAction(tr("project.open"), self)
+        open_action = QAction(tr("campaign.open"), self)
         open_action.setShortcut("Ctrl+O")
         open_action.triggered.connect(self._open_project)
         self.file_menu.addAction(open_action)
         
-        import_action = QAction(tr("project.import"), self)
+        import_action = QAction(tr("campaign.import"), self)
         import_action.triggered.connect(lambda: self._import_project(""))
         self.file_menu.addAction(import_action)
         
@@ -506,6 +543,7 @@ class MainWindow(QMainWindow):
         self._update_window_title()
         self._update_navigation()
         self._update_file_menu()
+        self._update_menu_bar()
         self._update_status_bar()
         if hasattr(self, 'language_button'):
             self._update_language_button(self.language_button)
@@ -513,13 +551,27 @@ class MainWindow(QMainWindow):
         # Rafraîchir toutes les vues
         self._refresh_all_views()
     
+    def _update_menu_bar(self):
+        """Met à jour les menus de la barre de menu"""
+        if hasattr(self, 'file_menu'):
+            self.file_menu.setTitle(tr("campaign.title"))
+        if hasattr(self, 'edit_menu'):
+            self.edit_menu.setTitle(tr("menu.edit"))
+        if hasattr(self, 'help_menu'):
+            self.help_menu.setTitle(tr("menu.help"))
+        if hasattr(self, 'about_action'):
+            self.about_action.setText(tr("msg.about"))
+    
     def _on_language_changed(self):
         """Gère le changement de langue"""
         self._update_ui_texts()
     
     def _apply_dark_theme(self):
         """Applique le thème sombre"""
-        self.setStyleSheet("""
+        from PyQt6.QtWidgets import QApplication
+        app = QApplication.instance()
+        if app:
+            app.setStyleSheet("""
             QMainWindow {
                 background-color: #2b2b2b;
                 color: #ffffff;
@@ -561,14 +613,156 @@ class MainWindow(QMainWindow):
             QTabBar::tab:selected {
                 background-color: #0078d4;
             }
-            QLineEdit, QTextEdit, QSpinBox, QComboBox {
+            QLineEdit, QTextEdit, QSpinBox {
                 background-color: #3c3c3c;
                 color: #ffffff;
                 border: 1px solid #555555;
                 padding: 5px;
             }
+            QComboBox {
+                background-color: #3c3c3c;
+                color: #ffffff;
+                border: 1px solid #555555;
+                padding: 5px;
+            }
+            QComboBox::drop-down {
+                border: none;
+                background-color: #3c3c3c;
+                width: 20px;
+            }
+            QComboBox::down-arrow {
+                image: none;
+                border-left: 4px solid transparent;
+                border-right: 4px solid transparent;
+                border-top: 6px solid #ffffff;
+                margin-right: 5px;
+            }
+            QComboBox QAbstractItemView {
+                background-color: #3c3c3c !important;
+                color: #ffffff !important;
+                border: 1px solid #555555;
+                selection-background-color: #0078d4;
+                selection-color: #ffffff;
+                outline: none;
+            }
+            QComboBox QAbstractItemView::item {
+                background-color: #3c3c3c;
+                color: #ffffff;
+                padding: 5px;
+                min-height: 20px;
+            }
+            QComboBox QAbstractItemView::item:hover {
+                background-color: #555555;
+                color: #ffffff;
+            }
+            QComboBox QAbstractItemView::item:selected {
+                background-color: #0078d4;
+                color: #ffffff;
+            }
+            QComboBox::item {
+                background-color: #3c3c3c;
+                color: #ffffff;
+            }
+            QComboBox::item:selected {
+                background-color: #0078d4;
+                color: #ffffff;
+            }
             QLabel {
                 color: #ffffff;
             }
         """)
+        # Appliquer aussi à la fenêtre principale pour les widgets enfants
+        self.setStyleSheet("""
+            QComboBox {
+                background-color: #3c3c3c;
+                color: #ffffff;
+                border: 1px solid #555555;
+                padding: 5px;
+            }
+            QComboBox::drop-down {
+                border: none;
+                background-color: #3c3c3c;
+                width: 20px;
+            }
+            QComboBox::down-arrow {
+                image: none;
+                border-left: 4px solid transparent;
+                border-right: 4px solid transparent;
+                border-top: 6px solid #ffffff;
+                margin-right: 5px;
+            }
+            QComboBox QAbstractItemView {
+                background-color: #3c3c3c !important;
+                color: #ffffff !important;
+                border: 1px solid #555555;
+                selection-background-color: #0078d4;
+                selection-color: #ffffff;
+                outline: none;
+            }
+            QComboBox QAbstractItemView::item {
+                background-color: #3c3c3c;
+                color: #ffffff;
+                padding: 5px;
+                min-height: 20px;
+            }
+            QComboBox QAbstractItemView::item:hover {
+                background-color: #555555;
+                color: #ffffff;
+            }
+            QComboBox QAbstractItemView::item:selected {
+                background-color: #0078d4;
+                color: #ffffff;
+            }
+        """)
+        # Appliquer aussi à la fenêtre principale pour les widgets enfants
+        self.setStyleSheet("""
+            QComboBox {
+                background-color: #3c3c3c;
+                color: #ffffff;
+                border: 1px solid #555555;
+                padding: 5px;
+            }
+            QComboBox::drop-down {
+                border: none;
+                background-color: #3c3c3c;
+                width: 20px;
+            }
+            QComboBox::down-arrow {
+                image: none;
+                border-left: 4px solid transparent;
+                border-right: 4px solid transparent;
+                border-top: 6px solid #ffffff;
+                margin-right: 5px;
+            }
+            QComboBox QAbstractItemView {
+                background-color: #3c3c3c !important;
+                color: #ffffff !important;
+                border: 1px solid #555555;
+                selection-background-color: #0078d4;
+                selection-color: #ffffff;
+                outline: none;
+            }
+            QComboBox QAbstractItemView::item {
+                background-color: #3c3c3c;
+                color: #ffffff;
+                padding: 5px;
+                min-height: 20px;
+            }
+            QComboBox QAbstractItemView::item:hover {
+                background-color: #555555;
+                color: #ffffff;
+            }
+            QComboBox QAbstractItemView::item:selected {
+                background-color: #0078d4;
+                color: #ffffff;
+            }
+        """)
+    
+    def _show_about(self):
+        """Affiche la boîte de dialogue À propos"""
+        QMessageBox.about(
+            self,
+            tr("msg.about_title"),
+            tr("msg.about_text")
+        )
 

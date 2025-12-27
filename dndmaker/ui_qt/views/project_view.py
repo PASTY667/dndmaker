@@ -1,5 +1,5 @@
 """
-Vue du projet
+Vue de la campagne
 """
 
 from PyQt6.QtWidgets import (
@@ -15,7 +15,7 @@ from ...core.i18n import tr
 
 
 class ProjectView(QWidget):
-    """Vue du projet"""
+    """Vue de la campagne"""
     
     # Signaux pour communiquer avec la fenêtre principale
     new_project_requested = pyqtSignal()
@@ -34,34 +34,34 @@ class ProjectView(QWidget):
         layout.setContentsMargins(20, 20, 20, 20)
         
         # Titre
-        self.title_label = QLabel(tr("project.title"))
+        self.title_label = QLabel(tr("campaign.title"))
         self.title_label.setStyleSheet("font-size: 18px; font-weight: bold;")
         layout.addWidget(self.title_label)
         
         # Boutons d'action
         action_layout = QHBoxLayout()
         
-        self.new_project_btn = QPushButton(tr("project.new"))
+        self.new_project_btn = QPushButton(tr("campaign.new"))
         self.new_project_btn.clicked.connect(self._on_new_project)
         action_layout.addWidget(self.new_project_btn)
         
-        self.open_project_btn = QPushButton(tr("project.open"))
+        self.open_project_btn = QPushButton(tr("campaign.open"))
         self.open_project_btn.clicked.connect(self._on_open_project)
         action_layout.addWidget(self.open_project_btn)
         
-        self.import_project_btn = QPushButton(tr("project.import"))
+        self.import_project_btn = QPushButton(tr("campaign.import"))
         self.import_project_btn.clicked.connect(self._on_import_project)
         action_layout.addWidget(self.import_project_btn)
         
         action_layout.addStretch()
         layout.addLayout(action_layout)
         
-        # Informations du projet
-        self.project_info = QLabel(tr("project.info"))
+        # Informations de la campagne
+        self.project_info = QLabel(tr("campaign.info"))
         layout.addWidget(self.project_info)
         
         # Historique des versions
-        self.history_label = QLabel(tr("project.history"))
+        self.history_label = QLabel(tr("campaign.history"))
         layout.addWidget(self.history_label)
         
         self.version_list = QListWidget()
@@ -70,7 +70,7 @@ class ProjectView(QWidget):
         # Boutons
         button_layout = QHBoxLayout()
         
-        self.rollback_btn = QPushButton(tr("project.rollback"))
+        self.rollback_btn = QPushButton(tr("campaign.rollback"))
         self.rollback_btn.clicked.connect(self._rollback_version)
         self.rollback_btn.setEnabled(False)
         button_layout.addWidget(self.rollback_btn)
@@ -79,32 +79,32 @@ class ProjectView(QWidget):
         layout.addLayout(button_layout)
         
         # Métadonnées
-        self.metadata_label = QLabel(tr("project.metadata"))
+        self.metadata_label = QLabel(tr("campaign.metadata"))
         layout.addWidget(self.metadata_label)
         
         self.metadata_edit = QTextEdit()
         self.metadata_edit.setMaximumHeight(100)
         layout.addWidget(self.metadata_edit)
         
-        self.save_metadata_btn = QPushButton(tr("project.save_metadata"))
+        self.save_metadata_btn = QPushButton(tr("campaign.save_metadata"))
         self.save_metadata_btn.clicked.connect(self._save_metadata)
         layout.addWidget(self.save_metadata_btn)
         
         layout.addStretch()
     
     def _on_new_project(self):
-        """Émet un signal pour créer un nouveau projet"""
+        """Émet un signal pour créer une nouvelle campagne"""
         self.new_project_requested.emit()
     
     def _on_open_project(self):
-        """Émet un signal pour ouvrir un projet"""
+        """Émet un signal pour ouvrir une campagne"""
         self.open_project_requested.emit()
     
     def _on_import_project(self):
-        """Ouvre un dialogue pour importer un projet depuis un JSON"""
+        """Ouvre un dialogue pour importer une campagne depuis un JSON"""
         file_path, _ = QFileDialog.getOpenFileName(
             self,
-            "Importer un projet",
+            tr("campaign.import"),
             "",
             "Fichiers JSON (*.json);;Tous les fichiers (*.*)"
         )
@@ -114,24 +114,24 @@ class ProjectView(QWidget):
     
     def on_language_changed(self):
         """Met à jour les textes lors du changement de langue"""
-        self.title_label.setText(tr("project.title"))
-        self.new_project_btn.setText(tr("project.new"))
-        self.open_project_btn.setText(tr("project.open"))
-        self.import_project_btn.setText(tr("project.import"))
-        self.history_label.setText(tr("project.history"))
-        self.rollback_btn.setText(tr("project.rollback"))
-        self.metadata_label.setText(tr("project.metadata"))
-        self.save_metadata_btn.setText(tr("project.save_metadata"))
+        self.title_label.setText(tr("campaign.title"))
+        self.new_project_btn.setText(tr("campaign.new"))
+        self.open_project_btn.setText(tr("campaign.open"))
+        self.import_project_btn.setText(tr("campaign.import"))
+        self.history_label.setText(tr("campaign.history"))
+        self.rollback_btn.setText(tr("campaign.rollback"))
+        self.metadata_label.setText(tr("campaign.metadata"))
+        self.save_metadata_btn.setText(tr("campaign.save_metadata"))
         self.refresh()
     
     def refresh(self):
         """Rafraîchit la vue"""
         project = self.project_service.get_current_project()
         if project:
-            name_label = tr("project.name")
-            created_label = tr("project.created")
-            modified_label = tr("project.modified")
-            version_label = tr("project.version")
+            name_label = tr("campaign.name")
+            created_label = tr("campaign.created")
+            modified_label = tr("campaign.modified")
+            version_label = tr("campaign.version")
             
             self.project_info.setText(
                 f"<b>{name_label}</b> {project.name}<br>"
@@ -147,7 +147,7 @@ class ProjectView(QWidget):
             import json
             self.metadata_edit.setPlainText(json.dumps(project.metadata, indent=2, ensure_ascii=False))
         else:
-            self.project_info.setText(tr("project.info"))
+            self.project_info.setText(tr("campaign.info"))
             self.version_list.clear()
             self.metadata_edit.clear()
     

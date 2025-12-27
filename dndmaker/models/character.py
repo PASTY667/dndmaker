@@ -132,5 +132,7 @@ class Character:
     capabilities: CharacterCapabilities = field(default_factory=CharacterCapabilities)
     equipment: List[str] = field(default_factory=list)
     valuables: Valuables = field(default_factory=Valuables)
+    faction: Optional[str] = None  # ID de la faction (optionnel)
+    image_id: Optional[str] = None  # ID de l'image associée
     notes: str = ""
 

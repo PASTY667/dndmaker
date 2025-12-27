@@ -10,7 +10,9 @@ from PyQt6.QtWidgets import (
 from pathlib import Path
 
 from ...services.project_service import ProjectService
-from ...models.character import CharacterType
+from ...models.character import Character, CharacterType
+from ...models.scene import Scene
+from ...models.session import Session
 from ...core.logger import UserActionLogger
 from ...core.i18n import tr
 
@@ -99,10 +101,20 @@ class ExportsView(QWidget):
         self.export_format.addItems(["PDF", "JSON", "TXT", "Markdown"])
         layout.addWidget(self.export_format)
         
+        # Bouton de prévisualisation
+        self.preview_btn = QPushButton("Prévisualiser")
+        self.preview_btn.clicked.connect(self._preview)
+        layout.addWidget(self.preview_btn)
+        
         # Bouton d'export
         self.export_btn = QPushButton(tr("export.export"))
         self.export_btn.clicked.connect(self._export)
         layout.addWidget(self.export_btn)
+        
+        # Widget de prévisualisation
+        from ..widgets.export_preview_widget import ExportPreviewWidget
+        self.preview_widget = ExportPreviewWidget(self.project_service, self)
+        layout.addWidget(self.preview_widget)
         
         layout.addStretch()
         
@@ -244,7 +256,7 @@ class ExportsView(QWidget):
                     return
                 
                 if export_format == "PDF":
-                    exporter = PDFExporter()
+                    exporter = PDFExporter(self.project_service)
                     success = exporter.export_character_sheet(element, output_path)
                 elif export_format == "JSON":
                     success = JSONExporter.export_character(element, output_path)
@@ -260,7 +272,7 @@ class ExportsView(QWidget):
                     return
                 
                 if export_format == "PDF":
-                    exporter = PDFExporter()
+                    exporter = PDFExporter(self.project_service)
                     success = exporter.export_character_sheet(element, output_path)
                 elif export_format == "JSON":
                     success = JSONExporter.export_character(element, output_path)
@@ -275,15 +287,15 @@ class ExportsView(QWidget):
                     QMessageBox.warning(self, "Erreur", "Aucune scène sélectionnée.")
                     return
                 
-                if export_format == "JSON":
+                if export_format == "PDF":
+                    exporter = PDFExporter(self.project_service)
+                    success = exporter.export_scene(element, output_path)
+                elif export_format == "JSON":
                     success = JSONExporter.export_scene(element, output_path)
                 elif export_format == "TXT":
                     success = TXTExporter.export_scene(element, output_path)
                 elif export_format == "Markdown":
                     success = MarkdownExporter.export_scene(element, output_path)
-                else:
-                    QMessageBox.warning(self, "Attention", "Le format PDF n'est pas disponible pour les scènes.")
-                    return
             
             elif export_type == "Session":
                 element = self.element_combo.currentData()
@@ -291,15 +303,15 @@ class ExportsView(QWidget):
                     QMessageBox.warning(self, "Erreur", "Aucune session sélectionnée.")
                     return
                 
-                if export_format == "JSON":
+                if export_format == "PDF":
+                    exporter = PDFExporter(self.project_service)
+                    success = exporter.export_session(element, output_path)
+                elif export_format == "JSON":
                     success = JSONExporter.export_session(element, output_path)
                 elif export_format == "TXT":
                     success = TXTExporter.export_session(element, output_path)
                 elif export_format == "Markdown":
                     success = MarkdownExporter.export_session(element, output_path)
-                else:
-                    QMessageBox.warning(self, "Attention", "Le format PDF n'est pas disponible pour les sessions.")
-                    return
             
             elif export_type == "Scénario complet":
                 # Export de tout le projet
@@ -347,3 +359,42 @@ class ExportsView(QWidget):
                 "Erreur",
                 f"Erreur lors de l'export:\n{str(e)}"
             )
+    
+    def _preview(self):
+        """Affiche la prévisualisation de l'export"""
+        self._update_preview()
+    
+    def _update_preview(self):
+        """Met à jour la prévisualisation automatiquement"""
+        export_type = self.export_type.currentText()
+        export_format = self.export_format.currentText()
+        
+        if not self.project_service.get_current_project():
+            self.preview_widget.clear_preview()
+            return
+        
+        selected_index = self.element_combo.currentIndex()
+        if selected_index < 0:
+            self.preview_widget.clear_preview()
+            return
+        
+        element = self.element_combo.currentData()
+        if not element:
+            self.preview_widget.clear_preview()
+            return
+        
+        # Générer la prévisualisation selon le type
+        if export_type == "Fiche PJ" or export_type == "Fiche PNJ/Créature":
+            from ...models.character import Character
+            if isinstance(element, Character):
+                self.preview_widget.preview_character(element, export_format)
+        elif export_type == "Scène":
+            from ...models.scene import Scene
+            if isinstance(element, Scene):
+                self.preview_widget.preview_scene(element, export_format)
+        elif export_type == "Session":
+            from ...models.session import Session
+            if isinstance(element, Session):
+                self.preview_widget.preview_session(element, export_format)
+        else:
+            self.preview_widget.clear_preview()

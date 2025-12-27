@@ -1,6 +1,13 @@
-# DNDMaker - Application de gestion de campagne Chroniques Oubliées
+# DNDMaker - Gestionnaire de campagne Chroniques Oubliées
 
-Application locale pour Maître de Jeu permettant de créer, organiser et maintenir une campagne de jeu de rôle Chroniques Oubliées.
+> **Application locale pour Maître de Jeu** permettant de créer, organiser et maintenir une campagne de jeu de rôle **Chroniques Oubliées**.
+
+## 🎲 Compatibilité
+
+**DNDMaker** est conçu spécifiquement pour le système de jeu de rôle **Chroniques Oubliées** (CO). Il n'est **pas compatible** avec D&D (Dungeons & Dragons) ou d'autres systèmes de JDR.
+
+### Système supporté
+- ✅ **Chroniques Oubliées** (toutes les éditions)
 
 ## 🚀 Lancement rapide (pour utilisateurs débutants)
 
@@ -91,14 +98,22 @@ chmod +x launch_cli.sh
 
 Voir [dndmaker/ui_cli/README.md](dndmaker/ui_cli/README.md) pour la documentation complète de la CLI.
 
+## 📂 Emplacement des sauvegardes
+
+Lors de la création d'une nouvelle campagne, vous pouvez choisir l'emplacement de sauvegarde via le dialogue de sélection de dossier. Les fichiers de campagne sont sauvegardés directement dans le dossier choisi (pas dans un sous-dossier `.dndmaker`).
+
+Le système de versionning conserve automatiquement les 3 dernières versions de votre campagne pour éviter l'encombrement du disque.
+
+> **Note** : La configuration de l'application (dernière campagne ouverte, préférences) est stockée dans `~/.dndmaker/config.json` (ou `%USERPROFILE%\.dndmaker\config.json` sous Windows).
+
 ## 🏗️ Architecture
 
 - **Langage** : Python 3
 - **GUI** : PyQt6
 - **Architecture** : MVC strict
 - **Multi-OS** : Windows / Linux / macOS
-- **Fonctionnement** : Local uniquement
-- **Sauvegarde** : Fichiers JSON versionnés
+- **Fonctionnement** : Local uniquement (pas de connexion réseau requise)
+- **Sauvegarde** : Fichiers JSON versionnés directement dans le dossier de campagne choisi (3 versions conservées)
 
 ## 📁 Structure du projet
 
@@ -120,15 +135,68 @@ dndmaker/
 
 ## 📝 Fonctionnalités
 
-- ✅ Gestion de projets avec versionning
+- ✅ Gestion de campagnes avec versionning (3 versions conservées)
 - ✅ Création et gestion de personnages (PJ, PNJ, Créatures)
-- ✅ Gestion de scènes et sessions
-- ✅ Banques de données (noms, races, classes, créatures, équipements)
+- ✅ Gestion de scènes et sessions avec timeline visuelle
+- ✅ Banques de données (noms, races, classes, créatures, équipements, lieux, factions)
+- ✅ Tables personnalisées avec champs définissables
 - ✅ Génération semi-automatique de PNJ et créatures
-- ✅ Export en PDF, JSON, TXT, Markdown
+- ✅ Export en PDF, JSON, TXT, Markdown avec prévisualisation
+- ✅ Gestion d'images avec drag-and-drop pour personnages, scènes, sessions, lieux, factions
 - ✅ Interface CLI complète
-- ✅ Import/Export de projets
+- ✅ Import/Export de campagnes
+- ✅ Interface multilingue (Français / English)
+- ✅ Interface utilisateur améliorée avec sélection par checkboxes
+
+## 📸 Captures d'écran
+
+### Interface principale - Édition de personnage
+
+![Édition de personnage](docs/screenshots/character_editor.png)
+
+L'interface d'édition de personnage permet de gérer tous les détails d'un personnage (PJ, PNJ ou Créature), incluant :
+- Informations de profil (nom, type, niveau, race, classe, faction, etc.)
+- Gestion d'images avec support du drag-and-drop
+- Caractéristiques, combat, défense et équipement
+- Export PDF avec image intégrée
+
+### Banques de données - Gestion des armes
+
+![Banques de données - Armes](docs/screenshots/banks_weapons.png)
+
+Les banques de données permettent de gérer tous les éléments de votre campagne :
+- Noms, races, classes, créatures
+- Équipements (armes, armures, outils, trinkets)
+- Lieux, factions, sorts
+- Tables personnalisées
+
+### Éditeur de scène - Timeline et références
+
+L'éditeur de scène offre une interface améliorée pour gérer vos scènes :
+- **Timeline visuelle** : Vue chronologique ou arborescente des scènes
+- **Sélection intuitive** : Interface avec checkboxes repliables pour sélectionner PJ, PNJ, lieux et scènes référencées
+- **Gestion d'images** : Ajout d'images pour chaque scène avec drag-and-drop
+- **Événements** : Création et gestion d'événements liés à la scène
+
+### Export de fiches
+
+![Export de fiches](docs/screenshots/exports_view.png)
+
+L'interface d'export permet de générer des fiches au format PDF, JSON, TXT ou Markdown :
+- **Prévisualisation** : Visualisation du contenu avant génération (JSON, TXT, Markdown)
+- **Export PDF** : Génération de fiches PDF avec images intégrées pour personnages, scènes et sessions
+- **Export multiple** : Export individuel ou complet de la campagne
 
 ## 📄 Licence
 
-Usage personnel uniquement.
+Voir le fichier [LICENSE](LICENSE) pour les détails complets.
+
+En résumé : Ce projet est sous licence MIT. Vous êtes libre de l'utiliser, le modifier et le distribuer, y compris à des fins commerciales, sous réserve de conserver la notice de copyright.
+
+## 🤝 Contribution
+
+Les contributions sont les bienvenues ! N'hésitez pas à ouvrir une issue ou une pull request.
+
+## 📧 Contact
+
+Pour toute question ou suggestion, n'hésitez pas à ouvrir une issue sur le dépôt du projet.

@@ -1,5 +1,5 @@
 """
-Service de gestion de projet
+Service de gestion de campagne
 """
 
 from pathlib import Path
@@ -14,10 +14,13 @@ from .character_service import CharacterService
 from .scene_service import SceneService
 from .session_service import SessionService
 from .bank_service import BankService
+from .location_service import LocationService
+from .table_service import TableService
+from .media_service import MediaService
 
 
 class ProjectService:
-    """Service de gestion de projet"""
+    """Service de gestion de campagne"""
     
     def __init__(self):
         self.current_project: Optional[Project] = None
@@ -29,9 +32,12 @@ class ProjectService:
         self.scene_service = SceneService(self)
         self.session_service = SessionService(self)
         self.bank_service = BankService(self)
+        self.location_service = LocationService(self)
+        self.table_service = TableService(self)
+        self.media_service = MediaService(self)
     
     def create_project(self, name: str, project_dir: Path) -> Project:
-        """Crée un nouveau projet"""
+        """Crée une nouvelle campagne"""
         # S'assurer que project_dir est un Path
         if not isinstance(project_dir, Path):
             project_dir = Path(str(project_dir))
@@ -44,8 +50,13 @@ class ProjectService:
             version=1
         )
         
-        self.project_path = project_dir / f"{name}.dndmaker"
+        # Sauvegarder directement dans le dossier choisi
+        self.project_path = project_dir / name
         self.project_path.mkdir(parents=True, exist_ok=True)
+        
+        # Initialiser le répertoire media
+        if self.media_service:
+            self.media_service.initialize_media_dir(self.project_path)
         
         self.version_manager = VersionManager(self.project_path)
         self.current_project = project
@@ -64,12 +75,12 @@ class ProjectService:
         return project
     
     def load_project(self, project_path: Path) -> Optional[Project]:
-        """Charge un projet existant"""
+        """Charge une campagne existante"""
         # S'assurer que project_path est un Path
         if not isinstance(project_path, Path):
             project_path = Path(str(project_path))
         
-        print(f"DEBUG: Tentative de chargement du projet depuis: {project_path}")
+        print(f"DEBUG: Tentative de chargement de la campagne depuis: {project_path}")
         
         data = ProjectLoader.load_project(project_path)
         if not data:
@@ -91,33 +102,33 @@ class ProjectService:
             self.current_project = project
             
             # Les services sont déjà initialisés dans __init__
-            # Réinitialiser pour s'assurer qu'ils sont liés au bon projet
+            # Réinitialiser pour s'assurer qu'ils sont liés à la bonne campagne
             self._reinit_services()
             
             # Initialiser les banques avec les données par défaut si nécessaire
             from ..core.data_loader import DataLoader
             DataLoader.initialize_banks(self.bank_service)
             
-            # Charger les données du projet
+            # Charger les données de la campagne
             self._load_project_data(data)
             
-            print(f"DEBUG: Projet '{project.name}' chargé avec succès")
+            print(f"DEBUG: Campagne '{project.name}' chargée avec succès")
             return project
         except (KeyError, ValueError, TypeError) as e:
-            print(f"DEBUG: Erreur lors de la création du projet: {e}")
+            print(f"DEBUG: Erreur lors du chargement de la campagne: {e}")
             import traceback
             print(traceback.format_exc())
             return None
     
     def save_project(self, description: Optional[str] = None) -> None:
-        """Sauvegarde le projet actuel"""
+        """Sauvegarde la campagne actuelle"""
         if not self.current_project or not self.project_path:
-            raise ValueError("Aucun projet ouvert")
+            raise ValueError("Aucune campagne ouverte")
         
         # Mettre à jour la date de modification
         self.current_project.updated_at = datetime.now()
         
-        # Sérialiser le projet avec toutes les données
+        # Sérialiser la campagne avec toutes les données
         project_data = {
             'id': self.current_project.id,
             'name': self.current_project.name,
@@ -129,27 +140,32 @@ class ProjectService:
             'scenes': self.scene_service.serialize_scenes() if self.scene_service else [],
             'sessions': self.session_service.serialize_sessions() if self.session_service else [],
             'data_banks': self.bank_service.serialize_banks() if self.bank_service else [],
-            'media': []  # À implémenter
+            'locations': self.location_service.serialize_locations() if self.location_service else [],
+            'custom_tables': self.table_service.serialize_tables() if self.table_service else [],
+            'media': self.media_service.serialize_media() if self.media_service else []
         }
         
         # Sauvegarder
         ProjectLoader.save_project(self.project_path, project_data)
         
-        # Créer une version
+        # Créer une version uniquement si les données ont changé
         if self.version_manager:
-            self.version_manager.create_version(project_data, description)
-            self.current_project.version = self.version_manager.get_current_version_number()
+            new_version = self.version_manager.create_version(project_data, description)
+            if new_version:
+                # Une nouvelle version a été créée, mettre à jour le numéro de version
+                self.current_project.version = new_version.version_number
+            # Sinon, les données n'ont pas changé, on garde le numéro de version actuel
     
     def import_project_from_json(self, json_path: Path, project_dir: Path) -> Optional[Project]:
         """
-        Importe un projet depuis un fichier JSON
+        Importe une campagne depuis un fichier JSON
         
         Args:
             json_path: Chemin vers le fichier JSON à importer
-            project_dir: Répertoire où créer le nouveau projet
+            project_dir: Répertoire où créer la nouvelle campagne
             
         Returns:
-            Le projet importé ou None en cas d'erreur
+            La campagne importée ou None en cas d'erreur
         """
         import json
         
@@ -169,19 +185,19 @@ class ProjectService:
             with open(json_path, 'r', encoding='utf-8') as f:
                 data = json.load(f)
             
-            # Extraire le nom du projet (depuis les données ou le nom du fichier)
+            # Extraire le nom de la campagne (depuis les données ou le nom du fichier)
             project_name = data.get('name', json_path.stem)
             
-            # Créer un nouveau projet avec ce nom
+            # Créer une nouvelle campagne avec ce nom
             project = self.create_project(project_name, project_dir)
             
-            # Charger les données dans le projet
+            # Charger les données dans la campagne
             self._load_project_data(data)
             
-            # Sauvegarder le projet importé
+            # Sauvegarder la campagne importée
             self.save_project(f"Import depuis {json_path.name}")
             
-            print(f"DEBUG: Projet '{project_name}' importé avec succès depuis {json_path}")
+            print(f"DEBUG: Campagne '{project_name}' importée avec succès depuis {json_path}")
             return project
             
         except json.JSONDecodeError as e:
@@ -194,7 +210,7 @@ class ProjectService:
             return None
     
     def get_current_project(self) -> Optional[Project]:
-        """Récupère le projet actuel"""
+        """Récupère la campagne actuelle"""
         return self.current_project
     
     def rollback_to_version(self, version_number: int) -> bool:
@@ -245,4 +261,13 @@ class ProjectService:
             self.session_service.load_sessions(data.get('sessions', []))
         if self.bank_service:
             self.bank_service.load_banks(data.get('data_banks', []))
+        if self.location_service:
+            self.location_service.load_locations(data.get('locations', []))
+        if self.table_service:
+            self.table_service.load_tables(data.get('custom_tables', []))
+        if self.media_service:
+            self.media_service.load_media(data.get('media', []))
+            # Initialiser le répertoire media si le projet est chargé
+            if self.project_path:
+                self.media_service.initialize_media_dir(self.project_path)
 

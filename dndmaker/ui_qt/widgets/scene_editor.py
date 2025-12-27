@@ -14,6 +14,7 @@ from typing import Optional, List
 from ...models.scene import Scene, Event
 from ...services.project_service import ProjectService
 from ...core.utils import generate_id
+from .image_upload_widget import ImageUploadWidget
 
 
 class SceneEditor(QDialog):
@@ -55,60 +56,100 @@ class SceneEditor(QDialog):
         self.description_edit.setMinimumHeight(100)
         layout.addWidget(self.description_edit)
         
+        # Image
+        from .image_upload_widget import ImageUploadWidget
+        image_label = QLabel("Image:")
+        layout.addWidget(image_label)
+        self.image_widget = ImageUploadWidget(
+            project_service=self.project_service,
+            entity_type="scene",
+            entity_id=self.scene.id if self.scene else "",
+            parent=self
+        )
+        layout.addWidget(self.image_widget)
+        
         # Onglets
         tabs = QTabWidget()
+        
+        # Onglet Timeline
+        from .scene_timeline_widget import SceneTimelineWidget
+        timeline_tab = QWidget()
+        timeline_layout = QVBoxLayout(timeline_tab)
+        self.timeline_widget = SceneTimelineWidget(self.project_service, timeline_tab)
+        if self.scene:
+            self.timeline_widget.set_current_scene(self.scene.id)
+        self.timeline_widget.scene_selected.connect(self._on_timeline_scene_selected)
+        timeline_layout.addWidget(self.timeline_widget)
+        tabs.addTab(timeline_tab, "Timeline")
         
         # Onglet Références
         ref_tab = QWidget()
         ref_layout = QVBoxLayout(ref_tab)
+        ref_layout.setSpacing(10)
+        
+        # Utiliser les nouveaux widgets de sélection
+        from .reference_selector_widget import CompactReferenceSelector
         
         # PJ
-        pj_label = QLabel("Personnages Joueurs (PJ):")
-        ref_layout.addWidget(pj_label)
-        self.pj_list = QListWidget()
-        self.pj_list.setSelectionMode(QListWidget.SelectionMode.MultiSelection)
-        ref_layout.addWidget(self.pj_list)
+        pj_items = []
+        if self.project_service.character_service:
+            from ...models.character import CharacterType
+            pjs = self.project_service.character_service.get_characters_by_type(CharacterType.PJ)
+            pj_items = [(pj.id, pj.name if pj.name else "Sans nom") for pj in pjs]
         
-        pj_btn_layout = QHBoxLayout()
-        self.add_pj_btn = QPushButton("Ajouter PJ")
-        self.add_pj_btn.clicked.connect(self._add_pj)
-        pj_btn_layout.addWidget(self.add_pj_btn)
-        self.remove_pj_btn = QPushButton("Retirer")
-        self.remove_pj_btn.clicked.connect(self._remove_pj)
-        pj_btn_layout.addWidget(self.remove_pj_btn)
-        ref_layout.addLayout(pj_btn_layout)
+        self.pj_selector = CompactReferenceSelector("Personnages Joueurs (PJ)", pj_items, ref_tab)
+        self.pj_selector.selection_changed.connect(self._on_pj_selection_changed)
+        ref_layout.addWidget(self.pj_selector)
         
         # PNJ/Créatures
-        npc_label = QLabel("PNJ / Créatures:")
-        ref_layout.addWidget(npc_label)
-        self.npc_list = QListWidget()
-        self.npc_list.setSelectionMode(QListWidget.SelectionMode.MultiSelection)
-        ref_layout.addWidget(self.npc_list)
+        npc_items = []
+        if self.project_service.character_service:
+            from ...models.character import CharacterType
+            npcs = self.project_service.character_service.get_characters_by_type(CharacterType.PNJ)
+            creatures = self.project_service.character_service.get_characters_by_type(CharacterType.CREATURE)
+            for npc in npcs:
+                npc_items.append((npc.id, f"{npc.name if npc.name else 'Sans nom'} (PNJ)"))
+            for creature in creatures:
+                npc_items.append((creature.id, f"{creature.name if creature.name else 'Sans nom'} (Créature)"))
         
-        npc_btn_layout = QHBoxLayout()
-        self.add_npc_btn = QPushButton("Ajouter PNJ/Créature")
-        self.add_npc_btn.clicked.connect(self._add_npc)
-        npc_btn_layout.addWidget(self.add_npc_btn)
-        self.remove_npc_btn = QPushButton("Retirer")
-        self.remove_npc_btn.clicked.connect(self._remove_npc)
-        npc_btn_layout.addWidget(self.remove_npc_btn)
-        ref_layout.addLayout(npc_btn_layout)
+        self.npc_selector = CompactReferenceSelector("PNJ / Créatures", npc_items, ref_tab)
+        self.npc_selector.selection_changed.connect(self._on_npc_selection_changed)
+        ref_layout.addWidget(self.npc_selector)
+        
+        # Lieux
+        location_items = []
+        if self.project_service.bank_service:
+            from ...models.bank import BankType
+            locations_bank = self.project_service.bank_service.get_bank_by_type(BankType.LOCATIONS)
+            if locations_bank:
+                location_items = [(entry.id, entry.value) for entry in locations_bank.entries]
+        
+        location_selector_layout = QVBoxLayout()
+        location_selector_layout.setSpacing(5)
+        
+        self.location_selector = CompactReferenceSelector("Lieux", location_items, ref_tab)
+        self.location_selector.selection_changed.connect(self._on_location_selection_changed)
+        location_selector_layout.addWidget(self.location_selector)
+        
+        # Bouton pour créer un nouveau lieu
+        self.create_location_btn = QPushButton("Créer un nouveau lieu")
+        self.create_location_btn.clicked.connect(self._create_location)
+        location_selector_layout.addWidget(self.create_location_btn)
+        
+        ref_layout.addLayout(location_selector_layout)
         
         # Scènes référencées
-        scene_label = QLabel("Scènes référencées:")
-        ref_layout.addWidget(scene_label)
-        self.scene_ref_list = QListWidget()
-        self.scene_ref_list.setSelectionMode(QListWidget.SelectionMode.MultiSelection)
-        ref_layout.addWidget(self.scene_ref_list)
+        scene_items = []
+        if self.project_service.scene_service:
+            scenes = self.project_service.scene_service.get_all_scenes()
+            # Ne pas inclure la scène actuelle si on est en mode édition
+            for scene in scenes:
+                if self.is_new or scene.id != (self.scene.id if self.scene else ""):
+                    scene_items.append((scene.id, scene.title))
         
-        scene_btn_layout = QHBoxLayout()
-        self.add_scene_ref_btn = QPushButton("Ajouter scène")
-        self.add_scene_ref_btn.clicked.connect(self._add_scene_ref)
-        scene_btn_layout.addWidget(self.add_scene_ref_btn)
-        self.remove_scene_ref_btn = QPushButton("Retirer")
-        self.remove_scene_ref_btn.clicked.connect(self._remove_scene_ref)
-        scene_btn_layout.addWidget(self.remove_scene_ref_btn)
-        ref_layout.addLayout(scene_btn_layout)
+        self.scene_ref_selector = CompactReferenceSelector("Scènes référencées", scene_items, ref_tab)
+        self.scene_ref_selector.selection_changed.connect(self._on_scene_ref_selection_changed)
+        ref_layout.addWidget(self.scene_ref_selector)
         
         tabs.addTab(ref_tab, "Références")
         
@@ -168,45 +209,47 @@ class SceneEditor(QDialog):
     def _load_references(self):
         """Charge les listes de références disponibles"""
         # PJ
-        self.pj_list.clear()
+        pj_items = []
         if self.project_service.character_service:
             from ...models.character import CharacterType
-            pjs = self.project_service.character_service.get_characters_by_type(
-                CharacterType.PJ
-            )
-            for pj in pjs:
-                item = QListWidgetItem(pj.name if pj.name else "Sans nom")
-                item.setData(Qt.ItemDataRole.UserRole, pj.id)
-                self.pj_list.addItem(item)
+            pjs = self.project_service.character_service.get_characters_by_type(CharacterType.PJ)
+            pj_items = [(pj.id, pj.name if pj.name else "Sans nom") for pj in pjs]
+        if hasattr(self, 'pj_selector'):
+            self.pj_selector.update_items(pj_items)
         
         # PNJ/Créatures
-        self.npc_list.clear()
+        npc_items = []
         if self.project_service.character_service:
             from ...models.character import CharacterType
-            npcs = self.project_service.character_service.get_characters_by_type(
-                CharacterType.PNJ
-            )
-            creatures = self.project_service.character_service.get_characters_by_type(
-                CharacterType.CREATURE
-            )
-            for npc in npcs + creatures:
-                name = npc.name if npc.name else "Sans nom"
-                char_type = "PNJ" if npc.type == CharacterType.PNJ else "Créature"
-                item = QListWidgetItem(f"{name} ({char_type})")
-                item.setData(Qt.ItemDataRole.UserRole, npc.id)
-                self.npc_list.addItem(item)
+            npcs = self.project_service.character_service.get_characters_by_type(CharacterType.PNJ)
+            creatures = self.project_service.character_service.get_characters_by_type(CharacterType.CREATURE)
+            for npc in npcs:
+                npc_items.append((npc.id, f"{npc.name if npc.name else 'Sans nom'} (PNJ)"))
+            for creature in creatures:
+                npc_items.append((creature.id, f"{creature.name if creature.name else 'Sans nom'} (Créature)"))
+        if hasattr(self, 'npc_selector'):
+            self.npc_selector.update_items(npc_items)
+        
+        # Lieux (depuis la banque de données)
+        location_items = []
+        if self.project_service.bank_service:
+            from ...models.bank import BankType
+            locations_bank = self.project_service.bank_service.get_bank_by_type(BankType.LOCATIONS)
+            if locations_bank:
+                location_items = [(entry.id, entry.value) for entry in locations_bank.entries]
+        if hasattr(self, 'location_selector'):
+            self.location_selector.update_items(location_items)
         
         # Scènes
-        self.scene_ref_list.clear()
+        scene_items = []
         if self.project_service.scene_service:
             scenes = self.project_service.scene_service.get_all_scenes()
             for scene in scenes:
                 # Ne pas inclure la scène actuelle si on est en mode édition
-                if not self.is_new and scene.id == self.scene.id:
-                    continue
-                item = QListWidgetItem(scene.title)
-                item.setData(Qt.ItemDataRole.UserRole, scene.id)
-                self.scene_ref_list.addItem(item)
+                if self.is_new or scene.id != (self.scene.id if self.scene else ""):
+                    scene_items.append((scene.id, scene.title))
+        if hasattr(self, 'scene_ref_selector'):
+            self.scene_ref_selector.update_items(scene_items)
     
     def _load_scene_data(self):
         """Charge les données de la scène"""
@@ -217,23 +260,28 @@ class SceneEditor(QDialog):
         self.description_edit.setPlainText(self.scene.description)
         self.notes_edit.setPlainText(self.scene.notes)
         
+        # Image
+        if self.scene.image_id:
+            self.image_widget.set_image_id(self.scene.image_id)
+            # Mettre à jour l'entity_id si nécessaire
+            if not self.image_widget.entity_id:
+                self.image_widget.entity_id = self.scene.id
+        
         # Sélectionner les PJ
-        for i in range(self.pj_list.count()):
-            item = self.pj_list.item(i)
-            if item.data(Qt.ItemDataRole.UserRole) in self.scene.player_characters:
-                item.setSelected(True)
+        if hasattr(self, 'pj_selector'):
+            self.pj_selector.set_selected_ids(self.scene.player_characters)
         
         # Sélectionner les PNJ
-        for i in range(self.npc_list.count()):
-            item = self.npc_list.item(i)
-            if item.data(Qt.ItemDataRole.UserRole) in self.scene.npcs:
-                item.setSelected(True)
+        if hasattr(self, 'npc_selector'):
+            self.npc_selector.set_selected_ids(self.scene.npcs)
+        
+        # Sélectionner les lieux
+        if hasattr(self, 'location_selector'):
+            self.location_selector.set_selected_ids(self.scene.locations)
         
         # Sélectionner les scènes référencées
-        for i in range(self.scene_ref_list.count()):
-            item = self.scene_ref_list.item(i)
-            if item.data(Qt.ItemDataRole.UserRole) in self.scene.referenced_scenes:
-                item.setSelected(True)
+        if hasattr(self, 'scene_ref_selector'):
+            self.scene_ref_selector.set_selected_ids(self.scene.referenced_scenes)
         
         # Charger les événements
         self.events_list.clear()
@@ -242,32 +290,56 @@ class SceneEditor(QDialog):
             item.setData(Qt.ItemDataRole.UserRole, event)
             self.events_list.addItem(item)
     
-    def _add_pj(self):
-        """Ajoute un PJ (déjà géré par la sélection multiple)"""
-        pass
+    def _on_pj_selection_changed(self, selected_ids: List[str]):
+        """Gère le changement de sélection des PJ"""
+        pass  # La sélection est gérée automatiquement par le widget
     
-    def _remove_pj(self):
-        """Retire les PJ sélectionnés"""
-        for item in self.pj_list.selectedItems():
-            item.setSelected(False)
+    def _on_npc_selection_changed(self, selected_ids: List[str]):
+        """Gère le changement de sélection des PNJ"""
+        pass  # La sélection est gérée automatiquement par le widget
     
-    def _add_npc(self):
-        """Ajoute un PNJ (déjà géré par la sélection multiple)"""
-        pass
+    def _on_location_selection_changed(self, selected_ids: List[str]):
+        """Gère le changement de sélection des lieux"""
+        pass  # La sélection est gérée automatiquement par le widget
     
-    def _remove_npc(self):
-        """Retire les PNJ sélectionnés"""
-        for item in self.npc_list.selectedItems():
-            item.setSelected(False)
+    def _on_scene_ref_selection_changed(self, selected_ids: List[str]):
+        """Gère le changement de sélection des scènes référencées"""
+        pass  # La sélection est gérée automatiquement par le widget
     
-    def _add_scene_ref(self):
-        """Ajoute une scène référencée (déjà géré par la sélection multiple)"""
-        pass
-    
-    def _remove_scene_ref(self):
-        """Retire les scènes référencées sélectionnées"""
-        for item in self.scene_ref_list.selectedItems():
-            item.setSelected(False)
+    def _create_location(self):
+        """Ouvre l'éditeur de banque pour créer un nouveau lieu"""
+        from ...models.bank import BankType
+        from .bank_entry_editor import BankEntryEditor
+        
+        # Ouvrir l'éditeur de banque pour créer un lieu
+        editor = BankEntryEditor(
+            BankType.LOCATIONS,
+            entry=None,
+            parent=self,
+            project_service=self.project_service
+        )
+        if editor.exec() == QDialog.DialogCode.Accepted:
+            try:
+                value, metadata = editor.get_entry_data()
+                
+                # Ajouter le lieu à la banque
+                bank = self.project_service.bank_service.get_or_create_bank(BankType.LOCATIONS)
+                existing_values = [e.value for e in bank.entries]
+                if value in existing_values:
+                    QMessageBox.warning(self, "Attention", f"Le lieu '{value}' existe déjà dans la banque.")
+                    return
+                
+                new_entry = self.project_service.bank_service.add_entry_to_bank(bank.id, value, metadata)
+                self.project_service.save_project(f"Ajout du lieu '{value}'")
+                
+                # Recharger la liste des lieux
+                self._load_references()
+                
+                # Sélectionner le nouveau lieu
+                if hasattr(self, 'location_selector'):
+                    self.location_selector.set_selected_ids([new_entry.id])
+            except ValueError as e:
+                QMessageBox.warning(self, "Erreur", str(e))
     
     def _add_event(self):
         """Ajoute un événement"""
@@ -311,6 +383,18 @@ class SceneEditor(QDialog):
         if current_item:
             self.events_list.takeItem(self.events_list.row(current_item))
     
+    def _on_timeline_scene_selected(self, scene_id: str):
+        """Gère la sélection d'une scène depuis la timeline"""
+        # Optionnel : ouvrir l'éditeur de la scène sélectionnée
+        # Pour l'instant, on ne fait rien, mais on pourrait ouvrir un nouvel éditeur
+        pass
+    
+    def showEvent(self, event):
+        """Rafraîchit la timeline lors de l'affichage"""
+        super().showEvent(event)
+        if hasattr(self, 'timeline_widget'):
+            self.timeline_widget.refresh()
+    
     def _save(self):
         """Sauvegarde la scène"""
         title = self.title_edit.text().strip()
@@ -322,25 +406,16 @@ class SceneEditor(QDialog):
         notes = self.notes_edit.toPlainText()
         
         # Récupérer les PJ sélectionnés
-        pj_ids = []
-        for i in range(self.pj_list.count()):
-            item = self.pj_list.item(i)
-            if item.isSelected():
-                pj_ids.append(item.data(Qt.ItemDataRole.UserRole))
+        pj_ids = self.pj_selector.get_selected_ids() if hasattr(self, 'pj_selector') else []
         
         # Récupérer les PNJ sélectionnés
-        npc_ids = []
-        for i in range(self.npc_list.count()):
-            item = self.npc_list.item(i)
-            if item.isSelected():
-                npc_ids.append(item.data(Qt.ItemDataRole.UserRole))
+        npc_ids = self.npc_selector.get_selected_ids() if hasattr(self, 'npc_selector') else []
+        
+        # Récupérer les lieux sélectionnés
+        location_ids = self.location_selector.get_selected_ids() if hasattr(self, 'location_selector') else []
         
         # Récupérer les scènes référencées
-        scene_ref_ids = []
-        for i in range(self.scene_ref_list.count()):
-            item = self.scene_ref_list.item(i)
-            if item.isSelected():
-                scene_ref_ids.append(item.data(Qt.ItemDataRole.UserRole))
+        scene_ref_ids = self.scene_ref_selector.get_selected_ids() if hasattr(self, 'scene_ref_selector') else []
         
         # Récupérer les événements
         events = []
@@ -355,8 +430,10 @@ class SceneEditor(QDialog):
             self.scene.notes = notes
             self.scene.player_characters = pj_ids
             self.scene.npcs = npc_ids
+            self.scene.locations = location_ids
             self.scene.referenced_scenes = scene_ref_ids
             self.scene.events = events
+            self.scene.image_id = self.image_widget.get_image_id()
             self.scene.updated_at = datetime.now()
         else:
             # Mettre à jour la scène existante
@@ -365,6 +442,8 @@ class SceneEditor(QDialog):
             self.scene.notes = notes
             self.scene.player_characters = pj_ids
             self.scene.npcs = npc_ids
+            self.scene.locations = location_ids
+            self.scene.image_id = self.image_widget.get_image_id()
             self.scene.referenced_scenes = scene_ref_ids
             self.scene.events = events
             self.scene.updated_at = datetime.now()

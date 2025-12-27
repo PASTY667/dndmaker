@@ -13,6 +13,8 @@ from typing import Optional
 
 from ...models.session import Session
 from ...services.project_service import ProjectService
+from .image_upload_widget import ImageUploadWidget
+from ...services.project_service import ProjectService
 
 
 class SessionEditor(QDialog):
@@ -59,6 +61,17 @@ class SessionEditor(QDialog):
         date_layout.addWidget(self.preparation_check)
         date_layout.addStretch()
         layout.addLayout(date_layout)
+        
+        # Image
+        image_label = QLabel("Image:")
+        layout.addWidget(image_label)
+        self.image_widget = ImageUploadWidget(
+            project_service=self.project_service,
+            entity_type="session",
+            entity_id=self.session.id if self.session else "",
+            parent=self
+        )
+        layout.addWidget(self.image_widget)
         
         # Scènes
         scenes_label = QLabel("Scènes (dans l'ordre):")
@@ -160,6 +173,13 @@ class SessionEditor(QDialog):
         self.preparation_check.setChecked(self.session.is_preparation)
         self.notes_edit.setPlainText(self.session.post_session_notes)
         
+        # Image
+        if self.session.image_id:
+            self.image_widget.set_image_id(self.session.image_id)
+            # Mettre à jour l'entity_id si nécessaire
+            if not self.image_widget.entity_id:
+                self.image_widget.entity_id = self.session.id
+        
         # Charger les scènes de la session
         self.session_scenes.clear()
         if self.project_service.scene_service:
@@ -248,6 +268,7 @@ class SessionEditor(QDialog):
             )
             self.session.scenes = scene_ids
             self.session.post_session_notes = notes
+            self.session.image_id = self.image_widget.get_image_id()
             self.session.updated_at = datetime.now()
         else:
             # Mettre à jour la session existante
@@ -256,6 +277,7 @@ class SessionEditor(QDialog):
             self.session.is_preparation = is_preparation
             self.session.scenes = scene_ids
             self.session.post_session_notes = notes
+            self.session.image_id = self.image_widget.get_image_id()
             self.session.updated_at = datetime.now()
             self.project_service.session_service.update_session(self.session)
         

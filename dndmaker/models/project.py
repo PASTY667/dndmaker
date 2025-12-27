@@ -1,5 +1,5 @@
 """
-Modèles de données pour le projet
+Modèles de données pour la campagne
 """
 
 from dataclasses import dataclass, field
@@ -9,7 +9,7 @@ from datetime import datetime
 
 @dataclass
 class Project:
-    """Projet de campagne"""
+    """Campagne de jeu de rôle"""
     id: str
     name: str
     created_at: datetime = field(default_factory=datetime.now)

@@ -196,6 +196,8 @@ class CharacterService:
             capabilities=capabilities,
             equipment=data.get('equipment', []),
             valuables=valuables,
+            faction=data.get('faction'),
+            image_id=data.get('image_id'),
             notes=data.get('notes', '')
         )
         

@@ -22,7 +22,7 @@ class Translator:
     _translations: Dict[Language, Dict[str, str]] = {
         Language.FRENCH: {
             # Navigation
-            "nav.project": "Projet",
+            "nav.campaign": "Campagne",
             "nav.sessions": "Sessions",
             "nav.scenes": "Scènes",
             "nav.characters": "PJ",
@@ -30,20 +30,20 @@ class Translator:
             "nav.banks": "Banques",
             "nav.exports": "Exports",
             
-            # Projet
-            "project.title": "Projet",
-            "project.new": "Nouveau projet",
-            "project.open": "Ouvrir un projet",
-            "project.import": "Importer un projet",
-            "project.info": "Aucun projet ouvert",
-            "project.name": "Nom:",
-            "project.created": "Créé le:",
-            "project.modified": "Modifié le:",
-            "project.version": "Version:",
-            "project.history": "Historique des versions:",
-            "project.rollback": "Restaurer cette version",
-            "project.metadata": "Métadonnées:",
-            "project.save_metadata": "Sauvegarder les métadonnées",
+            # Campagne
+            "campaign.title": "Campagne",
+            "campaign.new": "Nouvelle campagne",
+            "campaign.open": "Ouvrir une campagne",
+            "campaign.import": "Importer une campagne",
+            "campaign.info": "Aucune campagne ouverte",
+            "campaign.name": "Nom:",
+            "campaign.created": "Créé le:",
+            "campaign.modified": "Modifié le:",
+            "campaign.version": "Version:",
+            "campaign.history": "Historique des versions:",
+            "campaign.rollback": "Restaurer cette version",
+            "campaign.metadata": "Métadonnées:",
+            "campaign.save_metadata": "Sauvegarder les métadonnées",
             
             # Personnages
             "character.title": "Personnages",
@@ -80,6 +80,64 @@ class Translator:
             "bank.add": "Ajouter",
             "bank.edit": "Modifier",
             "bank.delete": "Supprimer",
+            "bank.type_factions": "Factions",
+            "bank.type_locations": "Lieux",
+            "bank.type_tables": "Tables",
+            
+            # Tables
+            "table.title": "Table",
+            "table.name": "Nom de la table:",
+            "table.fields": "Champs",
+            "table.field_name": "Nom du champ",
+            "table.field_type": "Type",
+            "table.add_field": "Ajouter un champ",
+            "table.remove_field": "Supprimer",
+            "table.field_types": "Types de champs",
+            "table.string": "Texte",
+            "table.number": "Nombre",
+            "table.boolean": "Booléen",
+            "table.date": "Date",
+            "table.rows": "Lignes de données",
+            "table.add_row": "Ajouter une ligne",
+            "table.edit_row": "Modifier",
+            "table.delete_row": "Supprimer",
+            "table.no_fields": "Aucun champ défini. Ajoutez au moins un champ pour créer la table.",
+            "table.schema_required": "Vous devez définir au moins un champ pour créer la table.",
+            "table.add_table": "Ajouter une table",
+            "table.edit_table": "Modifier une table",
+            "table.new_table": "Nouvelle table",
+            "table.edit": "Modifier",
+            "table.delete": "Supprimer",
+            "table.custom_tables": "Tables personnalisées",
+            "table.name_required": "Le nom de la table est obligatoire.",
+            
+            # Images
+            "image.upload": "Télécharger une image",
+            "image.remove": "Supprimer",
+            "image.no_image": "Aucune image",
+            "image.select_file": "Sélectionner une image",
+            "image.file_filter": "Images (*.jpg *.jpeg *.png *.gif *.bmp *.webp)",
+            "image.invalid_format": "Format d'image non supporté.",
+            "image.upload_failed": "Échec du téléchargement de l'image.",
+            "image.service_unavailable": "Service de médias non disponible.",
+            "image.confirm_remove": "Êtes-vous sûr de vouloir supprimer cette image ?",
+            "image.drag_drop_hint": "(Glissez-déposez une image ici)",
+            
+            # Lieux
+            "location.title": "Lieux",
+            "location.name": "Nom:",
+            "location.description": "Description:",
+            "location.type": "Type:",
+            "location.parent": "Lieu parent:",
+            "location.create": "Créer un lieu",
+            "location.edit": "Modifier",
+            "location.delete": "Supprimer",
+            "location.add_to_scene": "Ajouter à la scène",
+            
+            # Factions
+            "faction.title": "Faction",
+            "faction.select": "Sélectionner une faction:",
+            "faction.none": "Aucune",
             
             # Exports
             "export.title": "Exports",
@@ -106,11 +164,21 @@ class Translator:
             "btn.create": "Créer",
             
             # Messages
+            "msg.confirm": "Confirmer",
             "msg.confirm_delete": "Êtes-vous sûr de vouloir supprimer cet élément ?",
             "msg.success": "Opération réussie",
             "msg.error": "Erreur",
             "msg.warning": "Attention",
             "msg.info": "Information",
+            "msg.save": "Sauvegarder",
+            "msg.cancel": "Annuler",
+            "msg.about": "À propos",
+            "msg.about_title": "À propos de DNDMaker",
+            "msg.about_text": "DNDMaker v0.1.0\n\nApplication de gestion de campagne\nChroniques Oubliées\n\nDéveloppé avec Python et PyQt6",
+            
+            # Menus
+            "menu.edit": "Édition",
+            "menu.help": "Aide",
             
             # Langue
             "lang.french": "Français",
@@ -119,7 +187,7 @@ class Translator:
         },
         Language.ENGLISH: {
             # Navigation
-            "nav.project": "Project",
+            "nav.campaign": "Campaign",
             "nav.sessions": "Sessions",
             "nav.scenes": "Scenes",
             "nav.characters": "PCs",
@@ -127,20 +195,20 @@ class Translator:
             "nav.banks": "Banks",
             "nav.exports": "Exports",
             
-            # Projet
-            "project.title": "Project",
-            "project.new": "New project",
-            "project.open": "Open a project",
-            "project.import": "Import a project",
-            "project.info": "No project open",
-            "project.name": "Name:",
-            "project.created": "Created:",
-            "project.modified": "Modified:",
-            "project.version": "Version:",
-            "project.history": "Version history:",
-            "project.rollback": "Restore this version",
-            "project.metadata": "Metadata:",
-            "project.save_metadata": "Save metadata",
+            # Campaign
+            "campaign.title": "Campaign",
+            "campaign.new": "New campaign",
+            "campaign.open": "Open a campaign",
+            "campaign.import": "Import a campaign",
+            "campaign.info": "No campaign open",
+            "campaign.name": "Name:",
+            "campaign.created": "Created:",
+            "campaign.modified": "Modified:",
+            "campaign.version": "Version:",
+            "campaign.history": "Version history:",
+            "campaign.rollback": "Restore this version",
+            "campaign.metadata": "Metadata:",
+            "campaign.save_metadata": "Save metadata",
             
             # Personnages
             "character.title": "Characters",
@@ -177,6 +245,48 @@ class Translator:
             "bank.add": "Add",
             "bank.edit": "Edit",
             "bank.delete": "Delete",
+            "bank.type_factions": "Factions",
+            "bank.type_locations": "Locations",
+            "bank.type_tables": "Tables",
+            
+            # Tables
+            "table.title": "Table",
+            "table.name": "Table name:",
+            "table.fields": "Fields",
+            "table.field_name": "Field name",
+            "table.field_type": "Type",
+            "table.add_field": "Add field",
+            "table.remove_field": "Remove",
+            "table.field_types": "Field types",
+            "table.string": "Text",
+            "table.number": "Number",
+            "table.boolean": "Boolean",
+            "table.date": "Date",
+            "table.rows": "Data rows",
+            "table.add_row": "Add row",
+            "table.edit_row": "Edit",
+            "table.delete_row": "Delete",
+            "table.no_fields": "No fields defined. Add at least one field to create the table.",
+            "table.schema_required": "You must define at least one field to create the table.",
+            "table.add_table": "Add a table",
+            "table.edit_table": "Edit table",
+            "table.new_table": "New table",
+            "table.edit": "Edit",
+            "table.delete": "Delete",
+            "table.custom_tables": "Custom tables",
+            "table.name_required": "The table name is required.",
+            
+            # Images
+            "image.upload": "Upload image",
+            "image.remove": "Remove",
+            "image.no_image": "No image",
+            "image.select_file": "Select an image",
+            "image.file_filter": "Images (*.jpg *.jpeg *.png *.gif *.bmp *.webp)",
+            "image.invalid_format": "Unsupported image format.",
+            "image.upload_failed": "Failed to upload image.",
+            "image.service_unavailable": "Media service unavailable.",
+            "image.confirm_remove": "Are you sure you want to remove this image?",
+            "image.drag_drop_hint": "(Drag and drop an image here)",
             
             # Exports
             "export.title": "Exports",
@@ -203,11 +313,21 @@ class Translator:
             "btn.create": "Create",
             
             # Messages
+            "msg.confirm": "Confirm",
             "msg.confirm_delete": "Are you sure you want to delete this item?",
             "msg.success": "Success",
             "msg.error": "Error",
             "msg.warning": "Warning",
             "msg.info": "Information",
+            "msg.save": "Save",
+            "msg.cancel": "Cancel",
+            "msg.about": "About",
+            "msg.about_title": "About DNDMaker",
+            "msg.about_text": "DNDMaker v0.1.0\n\nCampaign management application\nChroniques Oubliées\n\nDeveloped with Python and PyQt6",
+            
+            # Menus
+            "menu.edit": "Edit",
+            "menu.help": "Help",
             
             # Langue
             "lang.french": "Français",

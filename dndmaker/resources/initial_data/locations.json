@@ -1,0 +1,63 @@
+[
+  {
+    "name": "Taverne du Dragon Rouge",
+    "type": "Taverne",
+    "description": "Une taverne animée au cœur de la ville, connue pour sa bière locale et ses rumeurs intéressantes."
+  },
+  {
+    "name": "Forêt des Ombres",
+    "type": "Forêt",
+    "description": "Une forêt sombre et mystérieuse où se cachent des créatures dangereuses. Les voyageurs évitent généralement cette zone après le coucher du soleil."
+  },
+  {
+    "name": "Donjon de la Montagne Noire",
+    "type": "Donjon",
+    "description": "Un ancien donjon abandonné creusé dans la montagne. Des rumeurs parlent de trésors oubliés et de créatures monstrueuses."
+  },
+  {
+    "name": "Temple de la Lumière",
+    "type": "Temple",
+    "description": "Un temple majestueux dédié aux dieux de la lumière. Les pèlerins viennent de loin pour y prier et recevoir des bénédictions."
+  },
+  {
+    "name": "Marché aux Puces",
+    "type": "Marché",
+    "description": "Un marché animé où l'on peut trouver de tout, des objets magiques aux babioles sans valeur. Attention aux pickpockets !"
+  },
+  {
+    "name": "Château du Seigneur",
+    "type": "Château",
+    "description": "Le château imposant du seigneur local. Bien gardé, il abrite la cour et les quartiers nobles."
+  },
+  {
+    "name": "Caverne des Gobelins",
+    "type": "Caverne",
+    "description": "Une caverne sombre et humide habitée par une tribu de gobelins. Des bruits étranges résonnent depuis les profondeurs."
+  },
+  {
+    "name": "Port de la Baie",
+    "type": "Port",
+    "description": "Un port animé où accostent des navires de toutes sortes. Les marins et les marchands s'y croisent en permanence."
+  },
+  {
+    "name": "Bibliothèque Royale",
+    "type": "Bibliothèque",
+    "description": "Une vaste bibliothèque contenant des milliers de livres et de parchemins anciens. Les érudits y passent leurs journées."
+  },
+  {
+    "name": "Cimetière Abandonné",
+    "type": "Cimetière",
+    "description": "Un cimetière oublié où les tombes sont envahies par la végétation. Des rumeurs parlent de morts-vivants qui errent la nuit."
+  },
+  {
+    "name": "Tour du Mage",
+    "type": "Tour",
+    "description": "Une tour isolée au sommet d'une colline. Un mage puissant y réside et étudie les arts arcanes."
+  },
+  {
+    "name": "Gouffre des Ténèbres",
+    "type": "Gouffre",
+    "description": "Un gouffre profond et sombre d'où émanent des gémissements étranges. Personne n'est jamais revenu après y être descendu."
+  }
+]
+

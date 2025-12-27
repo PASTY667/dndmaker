@@ -15,6 +15,7 @@ from ...models.character import (
     CharacterCapabilities, PathCapability, Valuables
 )
 from ...services.project_service import ProjectService
+from .image_upload_widget import ImageUploadWidget
 
 
 class CharacterEditor(QDialog):
@@ -157,6 +158,23 @@ class CharacterEditor(QDialog):
         self.profession_combo.setEnabled(False)  # Activé seulement pour PNJ
         layout.addRow("Métier:", self.profession_combo)
         
+        # Faction (optionnel pour tous les types)
+        self.faction_combo = QComboBox()
+        self.faction_combo.setEditable(False)
+        self.faction_combo.addItem("Aucune", None)  # Option "Aucune"
+        self._load_factions()
+        layout.addRow("Faction:", self.faction_combo)
+        
+        # Image
+        entity_id = self.character.id if self.character else ""
+        self.image_widget = ImageUploadWidget(
+            project_service=self.project_service,
+            entity_type="character",
+            entity_id=entity_id,
+            parent=widget
+        )
+        layout.addRow("Image:", self.image_widget)
+        
         self.notes_edit = QTextEdit()
         self.notes_edit.setMaximumHeight(100)
         layout.addRow("Notes:", self.notes_edit)
@@ -168,6 +186,18 @@ class CharacterEditor(QDialog):
         self.type_combo.currentTextChanged.connect(self._on_type_changed)
         
         return widget
+    
+    def _load_factions(self):
+        """Charge la liste des factions depuis la banque de données"""
+        self.faction_combo.clear()
+        self.faction_combo.addItem("Aucune", None)  # Option "Aucune"
+        
+        if self.project_service.bank_service:
+            from ...models.bank import BankType
+            factions_bank = self.project_service.bank_service.get_bank_by_type(BankType.FACTIONS)
+            if factions_bank:
+                for entry in factions_bank.entries:
+                    self.faction_combo.addItem(entry.value, entry.id)
     
     def _load_professions(self):
         """Charge la liste des métiers depuis les données initiales"""
@@ -704,6 +734,23 @@ class CharacterEditor(QDialog):
         # Activer/désactiver selon le type
         self._on_type_changed(self.character.type.value)
         
+        # Faction
+        if self.character.faction:
+            # Trouver l'index de la faction dans le combo
+            for i in range(self.faction_combo.count()):
+                if self.faction_combo.itemData(i) == self.character.faction:
+                    self.faction_combo.setCurrentIndex(i)
+                    break
+        else:
+            self.faction_combo.setCurrentIndex(0)  # "Aucune"
+        
+        # Image
+        if self.character.image_id:
+            self.image_widget.set_image_id(self.character.image_id)
+            # Mettre à jour l'entity_id si c'est un nouveau personnage
+            if not self.image_widget.entity_id:
+                self.image_widget.entity_id = self.character.id
+        
         self.notes_edit.setPlainText(self.character.notes if self.character.notes else "")
         
         # Caractéristiques
@@ -788,8 +835,11 @@ class CharacterEditor(QDialog):
         # Créer ou mettre à jour le personnage
         if self.is_new:
             from ...core.utils import generate_id
+            char_id = generate_id()
+            # Mettre à jour l'entity_id du widget image
+            self.image_widget.entity_id = char_id
             self.character = Character(
-                id=generate_id(),
+                id=char_id,
                 name=self.name_edit.text().strip(),
                 type=char_type,
                 profile=CharacterProfile(),
@@ -818,6 +868,11 @@ class CharacterEditor(QDialog):
             self.character.profile.profession = profession_text if profession_text else None
         else:
             self.character.profile.profession = None
+        
+        # Faction (optionnel pour tous)
+        faction_id = self.faction_combo.currentData()
+        self.character.faction = faction_id if faction_id else None
+        
         self.character.notes = self.notes_edit.toPlainText() or ""
         
         # Caractéristiques
@@ -873,6 +928,9 @@ class CharacterEditor(QDialog):
             item = self.equipment_list.item(i)
             if item:
                 self.character.equipment.append(item.text())
+        
+        # Image
+        self.character.image_id = self.image_widget.get_image_id()
         
         # Sauvegarder dans le service
         if self.is_new:

@@ -134,6 +134,7 @@ class SessionService:
             date=datetime.fromisoformat(data.get('date', datetime.now().isoformat())),
             scenes=data.get('scenes', []),
             post_session_notes=data.get('post_session_notes', ''),
+            image_id=data.get('image_id'),
             created_at=datetime.fromisoformat(data.get('created_at', datetime.now().isoformat())),
             updated_at=datetime.fromisoformat(data.get('updated_at', datetime.now().isoformat())),
             is_preparation=data.get('is_preparation', False)

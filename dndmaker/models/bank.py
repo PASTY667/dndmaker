@@ -20,6 +20,8 @@ class BankType(Enum):
     TOOLS = "TOOLS"
     TRINKETS = "TRINKETS"
     WEAPONS = "WEAPONS"
+    FACTIONS = "FACTIONS"
+    LOCATIONS = "LOCATIONS"
 
 
 @dataclass
