@@ -152,7 +152,8 @@ dndmaker/
 
 ### Interface principale - Édition de personnage
 
-![Édition de personnage](docs/screenshots/character_editor.png)
+<img width="1880" height="1627" alt="Capture d&#39;écran 2025-12-27 215301" src="https://github.com/user-attachments/assets/b88c9b9b-7dff-40ce-971d-fcaae1497c34" />
+
 
 L'interface d'édition de personnage permet de gérer tous les détails d'un personnage (PJ, PNJ ou Créature), incluant :
 - Informations de profil (nom, type, niveau, race, classe, faction, etc.)
@@ -161,8 +162,9 @@ L'interface d'édition de personnage permet de gérer tous les détails d'un per
 - Export PDF avec image intégrée
 
 ### Banques de données - Gestion des armes
+<img width="2002" height="1458" alt="Capture d&#39;écran 2025-12-27 215327" src="https://github.com/user-attachments/assets/b88e0bc2-f56b-4ae9-ab52-dc8d158c6f0b" />
 
-![Banques de données - Armes](docs/screenshots/banks_weapons.png)
+
 
 Les banques de données permettent de gérer tous les éléments de votre campagne :
 - Noms, races, classes, créatures
@@ -179,8 +181,9 @@ L'éditeur de scène offre une interface améliorée pour gérer vos scènes :
 - **Événements** : Création et gestion d'événements liés à la scène
 
 ### Export de fiches
+<img width="3505" height="424" alt="Capture d&#39;écran 2025-12-27 215337" src="https://github.com/user-attachments/assets/40698119-6a25-40c7-a9ae-c6f103e87856" />
 
-![Export de fiches](docs/screenshots/exports_view.png)
+
 
 L'interface d'export permet de générer des fiches au format PDF, JSON, TXT ou Markdown :
 - **Prévisualisation** : Visualisation du contenu avant génération (JSON, TXT, Markdown)
